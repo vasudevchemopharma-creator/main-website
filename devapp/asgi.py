@@ -1,5 +1,5 @@
 """
-ASGI config for vasudev project.
+ASGI config for devapp project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

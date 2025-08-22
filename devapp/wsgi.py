@@ -1,5 +1,5 @@
 """
-WSGI config for vasudev project.
+WSGI config for devapp project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

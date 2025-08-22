@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-g4f78gco6p)^)qo5g+p3zt4p)=pry10u84-fn-s1)e&mutlwte
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "high-zulema-bookl-legal-dvisior-93ab44c4.koyeb.app",
+]
 
 
 # Application definition
