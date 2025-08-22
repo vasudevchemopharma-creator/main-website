@@ -1,6 +1,250 @@
 <style>
-            /* Header & Navigation */
-            header {
+    /* Header & Navigation */
+    header {
+        background-color: #f9f9f9;
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    /* Responsive Navbar Styles */
+    .navbar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        background: #f9f9f9;
+        padding: 0.8rem 1.2rem;
+        position: relative;
+    }
+
+    .logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #1a365d;
+        text-decoration: none;
+        margin-left: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        z-index: 1001;
+    }
+
+    .menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        color: #1a365d;
+        font-size: 1.8rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        z-index: 1001;
+        transition: color 0.3s ease;
+    }
+
+    .menu-toggle:hover {
+        color: #e85a4f;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        align-items: center;
+    }
+
+    .nav-links li a {
+        color: #1a365d;
+        text-decoration: none;
+        font-size: 1.1rem;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+
+    .nav-links li a:hover,
+    .nav-links li a:focus {
+        background: rgba(26, 54, 93, 0.08);
+        color: #e85a4f;
+        text-decoration: none;
+    }
+
+    /* Dropdown Styles */
+    .dropdown-toggle {
+        color: #1a365d !important;
+        font-weight: 500 !important;
+        border: 1px solid #e2e8f0 !important;
+        background: #f9f9f9 !important;
+        transition: all 0.3s ease !important;
+    }
+
+    .dropdown-toggle:hover,
+    .dropdown-toggle:focus {
+        background: rgba(26, 54, 93, 0.08) !important;
+        color: #e85a4f !important;
+        border-color: #e85a4f !important;
+    }
+
+    .language-menu {
+        max-height: 320px;
+        overflow-y: auto;
+        width: 260px;
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+        .navbar-container {
+            flex-direction: row;
+            padding: 0.8rem;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+        }
+
+        .menu-toggle {
+            display: block;
+        }
+
+        .nav-links {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #f9f9f9;
+            flex-direction: column;
+            width: 100%;
+            gap: 0;
+            border-radius: 0 0 8px 8px;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            border-top: 1px solid #e2e8f0;
+            padding: 1rem 0;
+        }
+
+        .nav-links.active {
+            display: flex;
+        }
+
+        .nav-links li {
+            width: 100%;
+        }
+
+        .nav-links li a {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            color: #1a365d;
+            display: block;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .nav-links li:last-child a {
+            border-bottom: none;
+        }
+
+        .nav-links li a:hover {
+            background: rgba(26, 54, 93, 0.05);
+            color: #e85a4f;
+        }
+
+        /* Mobile dropdown adjustments */
+        .dropdown {
+            width: 100%;
+        }
+
+        .dropdown-toggle {
+            width: 100% !important;
+            text-align: left !important;
+            justify-content: space-between !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+
+        .dropdown-menu {
+            position: static !important;
+            transform: none !important;
+            width: 100% !important;
+            box-shadow: none !important;
+            border: none !important;
+            background: #f0f4f8 !important;
+            margin-top: 0.5rem !important;
+        }
+
+        .language-menu {
+            max-height: 200px;
+            width: 100% !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .navbar-container {
+            padding: 0.6rem;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+        }
+
+        .menu-toggle {
+            font-size: 1.6rem;
+        }
+
+        .nav-links li a {
+            padding: 0.8rem 1rem;
+            font-size: 0.95rem;
+        }
+    }
+
+    /* Animation for mobile menu */
+    .nav-links {
+        transition: all 0.3s ease;
+    }
+
+    .nav-links.active {
+        animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Ensure proper stacking */
+    .navbar-container {
+        position: relative;
+        z-index: 1000;
+    }
+
+    /* Fix for language dropdown in mobile */
+    @media (max-width: 768px) {
+        .nav-links .dropdown-menu.show {
+            display: block !important;
+        }
+    }
+
+    /* Legacy header styles for compatibility */
+    header {
             background-color: #f9f9f9;
             padding: 1rem 0;
             position: sticky;
@@ -8,65 +252,14 @@
             z-index: 1000;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #1a365d;
-            text-decoration: none;
-            text-shadow: none;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: #1a365d;
-            text-decoration: none;
-            font-weight: 400;
-            transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-        }
-
-        .nav-links a:hover {
-            color: #e85a4f;
-            background-color: rgba(26, 54, 93, 0.05);
-        }
-
-        /* Large language list usability */
-        .dropdown-menu.language-menu {
-            max-height: 320px;
-            overflow-y: auto;
-            width: 260px;
-        }
-
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: #1a365d;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-        }
-
 </style>
 
 
 <nav class="navbar-container">
     <a href="/" class="logo"></a>
-    <button class="menu-toggle" id="menuToggle">☰</button>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu">
+        <span>☰</span>
+    </button>
     <ul class="nav-links" id="navLinks">
         <li><a href="/">Home</a></li>
         <li><a href="/aboutus">About</a></li>
@@ -75,7 +268,7 @@
         <li><a href="#contact">Contact</a></li>
         <li>
             <div class="dropdown">
-                <button class="btn btn-light dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color:#1a365d; font-weight:500;">
+                <button class="btn dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     Select Your Language
                 </button>
                 <ul class="dropdown-menu language-menu" aria-labelledby="languageDropdown" id="languageMenu"></ul>
@@ -88,6 +281,62 @@
 <div id="google_translate_element" style="display:none;"></div>
 
 <script>
+    // Mobile Navigation Toggle
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        if (menuToggle && navLinks) {
+            menuToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                navLinks.classList.toggle('active');
+                
+                // Update hamburger icon
+                const icon = menuToggle.querySelector('span');
+                if (navLinks.classList.contains('active')) {
+                    icon.innerHTML = '✕';
+                    menuToggle.setAttribute('aria-expanded', 'true');
+                } else {
+                    icon.innerHTML = '☰';
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+            
+            // Close mobile menu when clicking on a link
+            const navLinkItems = navLinks.querySelectorAll('a');
+            navLinkItems.forEach(link => {
+                link.addEventListener('click', function() {
+                    navLinks.classList.remove('active');
+                    const icon = menuToggle.querySelector('span');
+                    icon.innerHTML = '☰';
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                });
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                    navLinks.classList.remove('active');
+                    const icon = menuToggle.querySelector('span');
+                    icon.innerHTML = '☰';
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    navLinks.classList.remove('active');
+                    const icon = menuToggle.querySelector('span');
+                    icon.innerHTML = '☰';
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+    });
+
     // Initialize Google Translate widget (called by the external script's cb param)
     function googleTranslateElementInit() {
         if (window.google && window.google.translate) {
