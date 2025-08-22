@@ -1,1 +1,1 @@
-web: gunicorn vasudev.wsgi
+web: gunicorn devapp.wsgi
