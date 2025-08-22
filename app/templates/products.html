@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Products - ChemCorp Industries</title>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Libre Baskerville', serif;
+            line-height: 1.6;
+            color: #000000;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: #3B38A0;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-decoration: none;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #000000;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #1A2A80, #3B38A0);
+            color: white;
+            padding: 100px 0 80px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 4rem;
+            color: #1a365d;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #4fd1c7, #2d5016);
+            border-radius: 2px;
+        }
+
+        /* Product Categories */
+        .categories-nav {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .category-btn {
+            background: transparent;
+            border: 2px solid #4fd1c7;
+            color: #4fd1c7;
+            padding: 12px 30px;
+            margin: 0 10px 10px 0;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Libre Baskerville', serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: #4fd1c7;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Products Grid */
+        .products-section {
+            background: #ffffff;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-top: 4px solid #4fd1c7;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+        }
+
+        .product-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            opacity: 0.1;
+        }
+
+        .product-content {
+            padding: 2.5rem;
+        }
+
+        .product-category {
+            background: #4fd1c7;
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .product-card h3 {
+            color: #1a365d;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+
+        .product-description {
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .product-specs {
+            margin-bottom: 2rem;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .spec-label {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .spec-value {
+            color: #4a5568;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4fd1c7, #38b2ac);
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Libre Baskerville', serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #38b2ac, #2c7a7b);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #4fd1c7;
+            color: #4fd1c7;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Libre Baskerville', serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .btn-secondary:hover {
+            background: #4fd1c7;
+            color: white;
+        }
+
+        /* Product Categories */
+        .product-category-section {
+            background: #f7fafc;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #4fd1c7, #38b2ac);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            margin: 0 auto 1.5rem;
+        }
+
+        .category-card h4 {
+            color: #1a365d;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .category-card p {
+            color: #4a5568;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: #ffffff;
+            padding: 2rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .filter-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            padding: 12px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1rem;
+            width: 300px;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #4fd1c7;
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hidden class for filtering */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 30px;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+            .page-header h1 {
+                font-size: 2.8rem;
+            }
+
+            .section-title {
+                font-size: 2.4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                gap: 0;
+                margin-top: 1rem;
+                background: rgba(26, 54, 93, 0.95);
+                border-radius: 8px;
+                padding: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 1rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .nav-links a:last-child {
+                border-bottom: none;
+            }
+
+            .page-header {
+                padding: 80px 0 60px;
+            }
+
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .section {
+                padding: 50px 0;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 3rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .product-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .product-card {
+                margin-bottom: 2rem;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        {% include 'infotab.html' %}
+        {% include 'navbar.html' %}
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Our Products</h1>
+            <p>Comprehensive range of high-quality industrial chemicals, pharmaceutical APIs, and specialty compounds for diverse industries</p>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="container">
+            <div class="filter-controls">
+                <input type="text" class="search-box" id="searchBox" placeholder="Search products...">
+            </div>
+            <div class="categories-nav">
+                <button class="category-btn active" data-category="all">All Products</button>
+                <button class="category-btn" data-category="industrial">Industrial Chemicals</button>
+                <button class="category-btn" data-category="api"> APIs Intermediates</button>
+                <button class="category-btn" data-category="specialty">Specialty Chemicals</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="section products-section">
+        <div class="container">
+            <h2 class="section-title">Our Product Portfolio</h2>
+            <div class="products-grid" id="productsGrid">
+                
+                <!-- Industrial Chemicals -->
+                <div class="product-card" data-category="industrial">
+                    <div class="product-image">
+                        <div class="product-bg"></div>
+                        <div class="product-icon">H2S</div>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">Industrial Chemical</div>
+                        <h3>MEA Triazine 78% H2S Scavenger</h3>
+                        <p class="product-description">High-purity chemical for oil & gas industry applications, effectively removing hydrogen sulfide from industrial processes.</p>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Purity:</span>
+                                <span class="spec-value">78%</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Packaging:</span>
+                                <span class="spec-value">200L Drums</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Application:</span>
+                                <span class="spec-value">Oil & Gas</span>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-primary">Request Quote</button>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="industrial">
+                    <div class="product-image">
+                        <div class="product-bg"></div>
+                        <div class="product-icon">PTSA</div>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">Industrial Chemical</div>
+                        <h3>P-toluenesulfonic Acid</h3>
+                        <p class="product-description">High-grade acid used in various industrial applications including catalysis and chemical synthesis.</p>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Purity:</span>
+                                <span class="spec-value">98%</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Packaging:</span>
+                                <span class="spec-value">PP Bag</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Grade:</span>
+                                <span class="spec-value">Industrial</span>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-primary">Request Quote</button>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="industrial">
+                    <div class="product-image">
+                        <div class="product-bg"></div>
+                        <div class="product-icon">CuS</div>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">Industrial Chemical</div>
+                        <h3>Copper Sulphate</h3>
+                        <p class="product-description">Industrial grade copper sulphate for various applications including agriculture, water treatment, and chemical processes.</p>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Grade:</span>
+                                <span class="spec-value">Industrial</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Form:</span>
+                                <span class="spec-value">Crystals</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Application:</span>
+                                <span class="spec-value">Multi-purpose</span>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-primary">Request Quote</button>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="industrial">
+                    <div class="product-image">
+                        <div class="product-bg"></div>
+                        <div class="product-icon">MnS</div>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">Industrial Chemical</div>
+                        <h3>Manganese Sulphate</h3>
+                        <p class="product-description">High-quality manganese sulphate for fertilizer production, animal feed supplements, and industrial applications.</p>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Grade:</span>
+                                <span class="spec-value">Industrial/Feed</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Form:</span>
+                                <span class="spec-value">Powder/Granules</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Purity:</span>
+                                <span class="spec-value">99%</span>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-primary">Request Quote</button>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pharmaceutical APIs -->
+                <div class="product-card" data-category="api">
+                    <div class="product-image">
+                        <div class="product-bg"></div>
+                        <div class="product-icon">ALB</div>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">Pharmaceutical API</div>
+                        <h3>Albendazol</h3>
+                        <p class="product-description">Anti-parasitic pharmaceutical active ingredient for treating various worm infections with high efficacy.</p>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Grade:</span>
+                                <span class="spec-value">Pharmaceutical</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Purity:</span>
+                                <span class="spec-value">USP/BP</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Category:</span>
+                                <span class="spec-value">Anthelmintic</span>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-primary">Request Quote</button>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="api">
+                    <div class="product-image">
+                        <div class="product-bg"></div>
+                        <div class="product-icon">KTC</div>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">Pharmaceutical API</div>
+                        <h3>Ketoconazole</h3>
+                        <p class="product-description">Antifungal API for treating various fungal infections, available in multiple pharmaceutical grades.</p>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">CAS Number:</span>
+                                <span class="spec-value">65277-42-1</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Grade:</span>
+                                <span class="spec-value">IP/BP/USP</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Category:</span>
+                                <span class="spec-value">Antifungal</span>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-primary">Request Quote</button>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="api">
+                    <div class="product-image">
+                        <div class="product-bg"></div>
+                        <div class="product-icon">PGB</div>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">Pharmaceutical API</div>
+                        <h3>Pregabalin</h3>
+                        <p class="product-description">Anti-convulsant medication API used for treating epilepsy, neuropathic pain, and anxiety disorders.</p>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Grade:</span>
+                                <span class="spec-value">Pharmaceutical</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Purity:</span>
+                                <span class="spec-value">USP</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Category:</span>
+                                <span class="spec-value">Anticonvulsant</span>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-primary">Request Quote</button>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Specialty Chemicals -->
+                <div class="product-card" data-category="specialty">
+                    <div class="product-image">
+                        <div class="product-bg"></div>
+                        <div class="product-icon">BCE</div>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">Specialty Chemical</div>
+                        <h3>Bis(2-chloroethyl)amine Hydrochloride</h3>
+                        <p class="product-description">High-purity specialty chemical intermediate used in pharmaceutical synthesis and research applications.</p>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Grade:</span>
+                                <span class="spec-value">Research/Pharma</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Purity:</span>
+                                <span class="spec-value">98%+</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Application:</span>
+                                <span class="spec-value">Synthesis</span>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-primary">Request Quote</button>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="specialty">
+                    <div class="product-image">
+                        <div class="product-bg"></div>
+                        <div class="product-icon">DEA</div>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">Specialty Chemical</div>
+                        <h3>Di Ethyl Amino Ethyl Chloride Hydrochloride</h3>
+                        <p class="product-description">Specialized chemical intermediate for pharmaceutical and fine chemical synthesis with high purity standards.</p>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Grade:</span>
+                                <span class="spec-value">Pharmaceutical</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Purity:</span>
+                                <span class="spec-value">99%+</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Form:</span>
+                                <span class="spec-value">Hydrochloride Salt</span>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-primary">Request Quote</button>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="specialty">
+                    <div class="product-image">
+                        <div class="product-bg"></div>
+                        <div class="product-icon">AMT</div>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">Specialty Chemical</div>
+                        <h3>2-Amino-5-methylthiazole</h3>
+                        <p class="product-description">Pharmaceutical intermediate used in the synthesis of various therapeutic compounds and research chemicals.</p>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Grade:</span>
+                                <span class="spec-value">Pharmaceutical</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Purity:</span>
+                                <span class="spec-value">98%</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Application:</span>
+                                <span class="spec-value">Intermediate</span>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-primary">Request Quote</button>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="specialty">
+                    <div class="product-image">
+                        <div class="product-bg"></div>
+                        <div class="product-icon">CEH</div>
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">Specialty Chemical</div>
+                        <h3>2-Chloroethylamine Hydrochloride</h3>
+                        <p class="product-description">API intermediate used in pharmaceutical manufacturing and specialty chemical synthesis processes.</p>
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Grade:</span>
+                                <span class="spec-value">API Intermediate</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Purity:</span>
+                                <span class="spec-value">99%</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Form:</span>
+                                <span class="spec-value">Crystalline</span>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-primary">Request Quote</button>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Categories Overview -->
+    <section class="section product-category-section">
+        <div class="container">
+            <h2 class="section-title">Product Categories</h2>
+            <div class="category-grid">
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="bi bi-gear-fill"></i>
+                    </div>
+                    <h4>Industrial Chemicals</h4>
+                    <p>High-quality industrial chemicals for oil & gas, manufacturing, and processing industries</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="bi bi-capsule"></i>
+                    </div>
+                    <h4>Pharmaceutical APIs</h4>
+                    <p>Active pharmaceutical ingredients meeting international quality standards for drug manufacturing</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="bi bi-flask"></i>
+                    </div>
+                    <h4>Specialty Chemicals</h4>
+                    <p>Specialized chemical intermediates and compounds for pharmaceutical and research applications</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="bi bi-heart"></i>
+                    </div>
+                    <h4>Personal Care</h4>
+                    <p>Natural and cosmetic grade products for personal care and skincare applications</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    {% include 'footer.html' %}
+
+    <script>
+        // Mobile Navigation Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Category Filtering
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const productCards = document.querySelectorAll('.product-card');
+
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+
+                const category = btn.getAttribute('data-category');
+
+                productCards.forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // Search Functionality
+        const searchBox = document.getElementById('searchBox');
+
+        searchBox.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+
+            productCards.forEach(card => {
+                const productName = card.querySelector('h3').textContent.toLowerCase();
+                const productDescription = card.querySelector('.product-description').textContent.toLowerCase();
+                const productCategory = card.querySelector('.product-category').textContent.toLowerCase();
+
+                if (productName.includes(searchTerm) || 
+                    productDescription.includes(searchTerm) || 
+                    productCategory.includes(searchTerm)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
+
+        // Product Action Buttons
+        document.querySelectorAll('.btn-primary').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const productCard = this.closest('.product-card');
+                const productName = productCard.querySelector('h3').textContent;
+                alert(`Quote request for ${productName} has been submitted. Our team will contact you shortly.`);
+            });
+        });
+
+        document.querySelectorAll('.btn-secondary').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const productCard = this.closest('.product-card');
+                const productName = productCard.querySelector('h3').textContent;
+                alert(`For detailed specifications of ${productName}, please contact our technical team.`);
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections for fade-in animation
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.add('fade-in');
+            observer.observe(section);
+        });
+    </script>
+</body>
+
+</html>

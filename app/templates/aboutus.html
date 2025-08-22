@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Vasudev Chemo Pharma</title>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Libre Baskerville', serif;
+            line-height: 1.6;
+            color: #000000;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: #f9f9f9;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-decoration: none;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #000000;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #1A2A80, #3B38A0);
+            color: white;
+            padding: 100px 0 80px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 4rem;
+            color: #1a365d;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #4fd1c7, #2d5016);
+            border-radius: 2px;
+        }
+
+        /* Company Overview */
+        .company-overview {
+            background: #ffffff;
+        }
+
+        .overview-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .overview-text p {
+            font-size: 1.15rem;
+            margin-bottom: 1.8rem;
+            color: #4a5568;
+            text-align: justify;
+            line-height: 1.8;
+        }
+
+        .overview-image {
+            position: relative;
+            height: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .image-placeholder {
+            background: linear-gradient(135deg, #B9375D, #D25D5D);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, #1a365d, #2d5016);
+            color: white;
+            padding: 80px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 2rem;
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #4fd1c7;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Mission Vision Values */
+        .mvv-section {
+            background: #f7fafc;
+        }
+
+        .mvv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .mvv-card {
+            background: white;
+            padding: 3rem 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .mvv-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .mvv-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #4fd1c7, #38b2ac);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            margin: 0 auto 2rem;
+        }
+
+        .mvv-card h3 {
+            color: #1a365d;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .mvv-card p {
+            color: #4a5568;
+            line-height: 1.7;
+        }
+
+        /* Leadership Team */
+        .leadership {
+            background: #ffffff;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+        }
+
+        .team-member {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-8px);
+        }
+
+        .member-image {
+            height: 250px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .member-info {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .member-info h4 {
+            color: #1a365d;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        .member-position {
+            color: #4fd1c7;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .member-info p {
+            color: #4a5568;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* History & Milestones */
+        .history-section {
+            background: #f7fafc;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(135deg, #4fd1c7, #38b2ac);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            margin-bottom: 3rem;
+            position: relative;
+            width: 50%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 3rem;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 3rem;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .timeline-year {
+            background: #1a365d;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-content h4 {
+            color: #1a365d;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .timeline-content p {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        /* Quality & Certifications */
+        .quality-section {
+            background: #ffffff;
+        }
+
+        .quality-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .quality-text {
+            padding: 2rem 0;
+        }
+
+        .quality-text h3 {
+            color: #1a365d;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            font-size: 2rem;
+        }
+
+        .quality-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #4a5568;
+            line-height: 1.7;
+        }
+
+        .certifications-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .cert-badge {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            color: #1a365d;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(252, 182, 159, 0.25);
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 30px;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+            .page-header h1 {
+                font-size: 2.8rem;
+            }
+
+            .section-title {
+                font-size: 2.4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                gap: 0;
+                margin-top: 1rem;
+                background: rgba(26, 54, 93, 0.95);
+                border-radius: 8px;
+                padding: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 1rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .nav-links a:last-child {
+                border-bottom: none;
+            }
+
+            .page-header {
+                padding: 80px 0 60px;
+            }
+
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .section {
+                padding: 50px 0;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 3rem;
+            }
+
+            .overview-content,
+            .quality-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                padding-left: 3rem !important;
+                padding-right: 0 !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        {% include 'infotab.html' %}
+        {% include 'navbar.html' %}
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>About Vasudev Chemo Pharma</h1>
+            <p>Leading the chemical industry with innovation, quality, and sustainable practices since 2003</p>
+        </div>
+    </section>
+
+    <!-- Company Overview -->
+    <section class="section company-overview">
+        <div class="container">
+            <h2 class="section-title">Our Story</h2>
+            <div class="overview-content">
+                <div class="overview-text">
+                    <p>Founded in 2003, Vasudev Chemo Pharma emerged from a vision to revolutionize the chemical manufacturing industry in India. What started as a small-scale operation has grown into one of the country's most trusted chemical manufacturers, serving diverse industries across the globe.</p>
+                    
+                    <p>Our journey began with a simple mission: to provide high-quality chemical solutions that meet the evolving needs of modern industries while maintaining the highest standards of safety and environmental responsibility. Over two decades, we have built a reputation for excellence, innovation, and reliability.</p>
+                    
+                    <p>Today, Vasudev Chemo Pharma stands as a testament to the power of dedication, continuous improvement, and customer-centric approach. We have successfully expanded our operations, enhanced our product portfolio, and established ourselves as a preferred partner for businesses worldwide.</p>
+                </div>
+                <div class="overview-image">
+                    <div class="image-placeholder">
+                        <p>Our State-of-the-Art<br>Manufacturing Facility</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">20+</span>
+                    <div class="stat-label">Years of Excellence</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">500+</span>
+                    <div class="stat-label">Satisfied Clients</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">50+</span>
+                    <div class="stat-label">Chemical Products</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">15+</span>
+                    <div class="stat-label">Countries Served</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission, Vision, Values -->
+    <section class="section mvv-section">
+        <div class="container">
+            <h2 class="section-title">Our Foundation</h2>
+            <div class="mvv-grid">
+                <div class="mvv-card">
+                    <div class="mvv-icon">
+                        <i class="bi bi-bullseye"></i>
+                    </div>
+                    <h3>Our Mission</h3>
+                    <p>To provide innovative, high-quality chemical solutions that enable our clients to achieve their goals while promoting sustainable practices and environmental stewardship in all our operations.</p>
+                </div>
+                <div class="mvv-card">
+                    <div class="mvv-icon">
+                        <i class="bi bi-eye"></i>
+                    </div>
+                    <h3>Our Vision</h3>
+                    <p>To be the global leader in chemical manufacturing, recognized for our commitment to excellence, innovation, and sustainability, while creating value for all stakeholders.</p>
+                </div>
+                <div class="mvv-card">
+                    <div class="mvv-icon">
+                        <i class="bi bi-heart"></i>
+                    </div>
+                    <h3>Our Values</h3>
+                    <p>Integrity, Quality, Innovation, Safety, Environmental Responsibility, Customer Focus, and Continuous Improvement guide everything we do at Vasudev Chemo Pharma.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- History & Milestones -->
+    <section class="section history-section">
+        <div class="container">
+            <h2 class="section-title">Our Journey</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2003</div>
+                        <h4>Company Founded</h4>
+                        <p>Vasudev Chemo Pharma was established with a vision to provide quality chemical solutions to Indian industries.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2008</div>
+                        <h4>ISO Certification</h4>
+                        <p>Achieved ISO 9001:2008 certification, establishing our commitment to quality management systems.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2012</div>
+                        <h4>International Expansion</h4>
+                        <p>Began exporting to Southeast Asian markets, marking our entry into international business.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2018</div>
+                        <h4>Facility Expansion</h4>
+                        <p>Opened our second manufacturing facility to meet growing demand and expand product lines.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2023</div>
+                        <h4>Sustainability Initiative</h4>
+                        <p>Launched comprehensive sustainability program focusing on green chemistry and environmental protection.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quality & Certifications -->
+    <section class="section quality-section">
+        <div class="container">
+            <h2 class="section-title">Quality & Standards</h2>
+            <div class="quality-content">
+                <div class="quality-text">
+                    <h3>Commitment to Excellence</h3>
+                    <p>At Vasudev Chemo Pharma, quality is not just a standard—it's our promise. We maintain rigorous quality control processes throughout our manufacturing operations, ensuring every product meets or exceeds international standards.</p>
+                    
+                    <p>Our state-of-the-art laboratories are equipped with advanced analytical instruments, and our team of qualified chemists conducts comprehensive testing at every stage of production.</p>
+                    
+                    <p>We are proud holders of multiple international certifications that validate our commitment to quality, safety, and environmental responsibility.</p>
+                </div>
+                <div class="certifications-grid">
+                    <div class="cert-badge">
+                        <strong>ISO 9001:2015</strong><br>
+                        Quality Management
+                    </div>
+                    <div class="cert-badge">
+                        <strong>ISO 14001:2015</strong><br>
+                        Environmental Management
+                    </div>
+                    <div class="cert-badge">
+                        <strong>ISO 45001:2018</strong><br>
+                        Health & Safety
+                    </div>
+                    <div class="cert-badge">
+                        <strong>FDA Approved</strong><br>
+                        Food Grade Products
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    {% include 'footer.html' %}
+
+    <script>
+        // Mobile Navigation Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections for fade-in animation
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.add('fade-in');
+            observer.observe(section);
+        });
+    </script>
+</body>
+
+</html>
