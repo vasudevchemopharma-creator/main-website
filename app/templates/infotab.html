@@ -1,11 +1,175 @@
 {% load static %}
-<nav style="display:flex; justify-content:flex-end; background-color:#f9f9f9; padding:15px; padding-right: 50px; align-items: center;">
-    <a href="/" style="position: absolute; left: 30px; top: 10px; display: flex; align-items: center; text-decoration: none;">
-        <img src="{% static 'media/logo.png' %}" alt="Vasudev Chemo Pharma Logo" style="height:120px; padding:10px 15px;">
-        <span style="color:#1a365d; font-size:2rem; font-weight:700; margin-left:10px;">Vasudev Chemo Pharma</span>
+<style>
+    /* Info Tab Responsive Styles */
+    .info-tab-container {
+        display: flex;
+        justify-content: flex-end;
+        background-color: #f9f9f9;
+        padding: 15px 50px 15px 30px;
+        align-items: center;
+        position: relative;
+        min-height: 80px;
+    }
+
+    .logo-container {
+        position: absolute;
+        left: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+
+    .logo-img {
+        height: 80px;
+        padding: 5px 10px;
+    }
+
+    .logo-text {
+        color: #1a365d;
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-left: 10px;
+        white-space: nowrap;
+    }
+
+    .info-content {
+        list-style: none;
+        display: flex;
+        gap: 50px;
+        margin: 0;
+        padding: 10px 0;
+        align-items: center;
+    }
+
+    .info-item {
+        color: #1a365d;
+        font-size: 16px;
+        font-weight: 500;
+        white-space: nowrap;
+    }
+
+    /* Tablet Styles */
+    @media (max-width: 1024px) {
+        .info-tab-container {
+            padding: 12px 30px 12px 25px;
+            min-height: 70px;
+        }
+
+        .logo-container {
+            left: 25px;
+        }
+
+        .logo-img {
+            height: 70px;
+        }
+
+        .logo-text {
+            font-size: 1.6rem;
+        }
+
+        .info-content {
+            gap: 30px;
+        }
+
+        .info-item {
+            font-size: 15px;
+        }
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+        .info-tab-container {
+            flex-direction: column;
+            padding: 10px 15px;
+            min-height: auto;
+            align-items: center;
+        }
+
+        .logo-container {
+            position: relative;
+            left: auto;
+            top: auto;
+            transform: none;
+            margin-bottom: 8px;
+        }
+
+        .logo-img {
+            height: 60px;
+            padding: 3px 8px;
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            margin-left: 8px;
+        }
+
+        .info-content {
+            flex-direction: column;
+            gap: 5px;
+            padding: 5px 0;
+            text-align: center;
+        }
+
+        .info-item {
+            font-size: 13px;
+        }
+    }
+
+    /* Small Mobile Styles */
+    @media (max-width: 480px) {
+        .info-tab-container {
+            padding: 8px 10px;
+        }
+
+        .logo-img {
+            height: 50px;
+            padding: 2px 5px;
+        }
+
+        .logo-text {
+            font-size: 1.2rem;
+            margin-left: 6px;
+        }
+
+        .info-content {
+            gap: 3px;
+        }
+
+        .info-item {
+            font-size: 12px;
+        }
+    }
+
+    /* Extra Small Mobile */
+    @media (max-width: 360px) {
+        .info-tab-container {
+            padding: 6px 8px;
+        }
+
+        .logo-img {
+            height: 45px;
+        }
+
+        .logo-text {
+            font-size: 1rem;
+            margin-left: 5px;
+        }
+
+        .info-item {
+            font-size: 11px;
+        }
+    }
+</style>
+
+<nav class="info-tab-container">
+    <a href="/" class="logo-container">
+        <img src="{% static 'media/logo.png' %}" alt="Vasudev Chemo Pharma Logo" class="logo-img">
+        <span class="logo-text">Vasudev Chemo Pharma</span>
     </a>
-    <ul style="list-style:none; display:flex; gap:50px; margin:0; padding: 10px;">
-        <li style="color:#1a365d; font-size:18px; font-weight:500;">Email : info@vasudevchemopharma.com</li> 
-        <li style="color:#1a365d; font-size:18px; font-weight:500;">Mobile No. : +91 9898837713</li> 
+    <ul class="info-content">
+        <li class="info-item">Email : info@vasudevchemopharma.com</li> 
+        <li class="info-item">Mobile No. : +91 9898837713</li> 
     </ul>
 </nav>
