@@ -11,3 +11,6 @@ def ourservices(request):
 
 def products(request):
     return render(request, 'products.html')
+
+def triazine(request):
+    return render(request, 'MEA-Triazine.html')

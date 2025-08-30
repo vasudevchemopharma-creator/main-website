@@ -22,5 +22,6 @@ urlpatterns = [
     path('aboutus', views.about, name='aboutus'),
     path('ourservices', views.ourservices, name='ourservices'),
     path('products', views.products, name='products'),
+    path('MEA-Triazine', views.triazine, name='MEA-Triazine'),
 ]
 

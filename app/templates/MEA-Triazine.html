@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEA Triazine 78% H2S Scavenger - Vasudev Chemo Pharma</title>
+  <link rel="icon" type="image/png" href="{% static 'media/logo.jpg' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Libre Baskerville', serif;
+      background: #f8f9fa;
+      color: #1a365d;
+    }
+
+    .page-header {
+      background: linear-gradient(135deg, #1A2A80, #3B38A0);
+      color: #fff;
+      padding: 80px 0;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+    }
+
+    .product-detail {
+      padding: 60px 0;
+    }
+
+    .product-detail .image-box {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .product-detail .image-box img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .product-detail h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .product-detail p {
+      color: #4a5568;
+      line-height: 1.6;
+    }
+
+    .spec-table {
+      margin-top: 30px;
+    }
+
+    .spec-table table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .spec-table th,
+    .spec-table td {
+      padding: 14px 20px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .spec-table th {
+      background: #3B38A0;
+      color: #fff;
+      text-align: left;
+    }
+
+    .action-buttons {
+      margin-top: 30px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #4fd1c7, #38b2ac);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      color: #fff;
+      transition: 0.3s;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #38b2ac, #2c7a7b);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 2px solid #4fd1c7;
+      color: #4fd1c7;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: 0.3s;
+      text-decoration: none;
+    }
+
+    .btn-secondary:hover {
+      background: #4fd1c7;
+      color: #fff;
+    }
+
+    .applications {
+      margin-top: 50px;
+    }
+
+    .applications h3 {
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .applications ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .applications li {
+      padding: 10px 0;
+      border-bottom: 1px solid #e2e8f0;
+      color: #4a5568;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header>
+    {% include 'infotab.html' %}
+    {% include 'navbar.html' %}
+  </header>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1>MEA Triazine 78% H2S Scavenger</h1>
+      <p>Efficient hydrogen sulfide scavenger for oil & gas industry applications</p>
+    </div>
+  </section>
+
+  <!-- Product Details -->
+  <section class="product-detail">
+    <div class="container">
+      <div class="row g-5">
+        <!-- Product Image -->
+        <div class="col-md-5">
+          <div class="image-box">
+            <img src="{% static 'media/MEA-Triazine.jpg' %}" alt="MEA Triazine Product Image">
+          </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="col-md-7">
+          <h2>Product Overview</h2>
+          <p>
+            MEA Triazine 78% is a high-performance H2S scavenger used primarily in the oil & gas industry.
+            It efficiently removes hydrogen sulfide from natural gas, crude oil, and other industrial process streams,
+            ensuring safe operations and compliance with environmental standards.
+          </p>
+
+          <!-- Specification Table -->
+          <div class="spec-table">
+            <table>
+              <tr>
+                <th>Specification</th>
+                <th>Details</th>
+              </tr>
+              <tr>
+                <td>Chemical Name</td>
+                <td>MEA Triazine (Hexahydro-1,3,5-tris(hydroxyethyl)-s-triazine)</td>
+              </tr>
+              <tr>
+                <td>Purity</td>
+                <td>78%</td>
+              </tr>
+              <tr>
+                <td>Appearance</td>
+                <td>Clear to pale yellow liquid</td>
+              </tr>
+              <tr>
+                <td>Packaging</td>
+                <td>200L HDPE Drums / IBC Tank</td>
+              </tr>
+              <tr>
+                <td>Application</td>
+                <td>Hydrogen Sulfide Scavenger for Oil & Gas</td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="action-buttons">
+            <a href="/#contact" class="btn-secondary">Request For Quotation</a>
+            <button class="btn-secondary">Download Brochure</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Applications Section -->
+      <div class="applications">
+        <h3>Applications</h3>
+        <ul>
+          <li>Natural Gas Treatment</li>
+          <li>Crude Oil Sweetening</li>
+          <li>Petrochemical Processing</li>
+          <li>Industrial Gas Treatment</li>
+          <li>Storage & Transportation of Hydrocarbons</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  {% include 'footer.html' %}
+
+</body>
+
+</html>
