@@ -181,7 +181,8 @@
         }
 
         .hero-slider .slide.bg-1 { background-image: url("{% static 'media/Header-1.jpg' %}"); }
-        .hero-slider .slide.bg-2 { background-image: url("{% static 'media/Header-2.jpg' %}"); }
+        .hero-slider .slide.bg-4 { background-image: url("{% static 'media/Header-4.jpg' %}"); }
+        .hero-slider .slide.bg-3 { background-image: url("{% static 'media/Header-3.jpg' %}"); }
 
         .hero-slider .slide.active {
             opacity: 1;
@@ -831,6 +832,68 @@
             min-width: 280px;
             flex: 0 0 auto;
         }
+
+        /* Centered text over the slider */
+        .slider-center-text {
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 3;
+            transform: translate(-50%, -50%) translateX(60px);
+            transition: opacity 0.5s, transform 0.5s;
+            color: #fff;
+            font-size: 2.8rem;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            letter-spacing: 1px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .slider-center-text.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%) translateX(0);
+        }
+
+        .slider-center-text.left-in {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%) translateX(0);
+            animation: textLeftIn 0.5s;
+        }
+
+        .slider-center-text.right-in {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%) translateX(0);
+            animation: textRightIn 0.5s;
+        }
+
+        @keyframes textLeftIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) translateX(-60px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) translateX(0);
+            }
+        }
+
+        @keyframes textRightIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) translateX(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) translateX(0);
+            }
+        }
     </style>
 </head>
 
@@ -845,8 +908,14 @@
     <section id="home" class="hero-slider">
         <div class="slides">
             <div class="slide bg-1 active"></div>
-            <div class="slide bg-2"></div>
+            <div class="slide bg-3"></div>
+            <div class="slide bg-4"></div>
         </div>
+
+        <!-- Centered bold text for each slide -->
+        <div class="slider-center-text slider-text-1">Leading Chemical Manufacturer In India</div>
+        <div class="slider-center-text slider-text-2">Trusted Partner for Quality Chemicals</div>
+        <div class="slider-center-text slider-text-3">Delivering Innovation & Excellence</div>
 
         <button class="nav-btn nav-prev" aria-label="Previous slide">
             <i class="bi bi-chevron-left"></i>
@@ -1080,6 +1149,30 @@
         let autoSlideTimer = null;
         let isAnimating = false;
 
+        function updateSliderText(index, direction = 'left') {
+            const texts = document.querySelectorAll('.slider-center-text');
+            texts.forEach((el, i) => {
+                el.classList.remove('active', 'left-in', 'right-in');
+                el.style.display = 'none';
+            });
+            const currentText = texts[index];
+            if (currentText) {
+                currentText.style.display = 'block';
+                // Add animation class based on direction
+                if (direction === 'left') {
+                    currentText.classList.add('left-in');
+                } else {
+                    currentText.classList.add('right-in');
+                }
+                // Remove animation class after animation ends, keep only active
+                setTimeout(() => {
+                    currentText.classList.remove('left-in', 'right-in');
+                    currentText.classList.add('active');
+                }, 500);
+            }
+        }
+
+        // Update goToSlide to pass direction
         function goToSlide(targetIndex, direction) {
             if (isAnimating || targetIndex === currentSlideIndex) return;
             isAnimating = true;
@@ -1091,18 +1184,16 @@
             heroSlides.forEach(s => s.classList.remove('to-left', 'to-right', 'pre-left'));
 
             if (direction === 'left') {
-                // Current moves left out, target enters from right (default state)
                 current.classList.add('to-left');
                 target.classList.add('active');
             } else {
-                // direction === 'right': current moves right out, target must start at -100%
                 target.classList.add('pre-left');
-                // Force reflow so the browser applies pre-left before activating
-                // eslint-disable-next-line no-unused-expressions
                 target.offsetHeight;
                 current.classList.add('to-right');
                 target.classList.add('active');
             }
+
+            updateSliderText(targetIndex, direction); // Pass direction here
 
             const onDone = () => {
                 current.classList.remove('active', 'to-left', 'to-right');
@@ -1153,6 +1244,9 @@
             heroEl.addEventListener('mouseenter', stopAutoSlide);
             heroEl.addEventListener('mouseleave', startAutoSlide);
         }
+
+        // On page load, show the first text
+        updateSliderText(0, 'left');
     </script>
 </body>
 
