@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MEA Triazine 78% H2S Scavenger - Vasudev Chemo Pharma</title>
+  <title>MEA Triazine 80% H2S Scavenger - Vasudev Chemo Pharma</title>
   <link rel="icon" type="image/png" href="{% static 'media/logo.jpg' %}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css">
@@ -139,6 +139,94 @@
       border-bottom: 1px solid #e2e8f0;
       color: #4a5568;
     }
+
+    .available-grades {
+      font-size: 1.1rem;
+      margin-top: 10px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .nav-tabs-wrapper {
+      margin-top: 40px;
+    }
+
+    .nav-tabs {
+      justify-content: center;
+      border-bottom: 2px solid #3B38A0;
+    }
+
+    .nav-link {
+      border: none;
+      border-radius: 0;
+      padding: 15px 30px;
+      font-weight: 500;
+      color: #1a365d;
+      transition: 0.3s;
+    }
+
+    .nav-link:hover {
+      color: #3B38A0;
+    }
+
+    .nav-link.active {
+      color: #fff;
+      background: #3B38A0;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .tab-content {
+      background: #fff;
+      padding: 30px;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Additional Styles for Comparison Table */
+    #comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+    }
+
+    #comparison-table th,
+    #comparison-table td {
+      padding: 12px 15px;
+      border: 1px solid #e2e8f0;
+      text-align: center;
+    }
+
+    #comparison-table th {
+      background: #3B38A0;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .grade-col {
+      font-weight: 500;
+      color: #1a365d;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .grade-col.active-col {
+      background: #3B38A0 !important;
+      color: #fff !important;
+    }
+
+    .col-40 {
+      background: #edf2f7;
+    }
+
+    .col-50 {
+      background: #f7fafc;
+    }
+
+    .col-60 {
+      background: #fff5f5;
+    }
+
+    .col-80 {
+      background: #e6fffa;
+    }
   </style>
 </head>
 
@@ -153,8 +241,9 @@
   <!-- Page Header -->
   <section class="page-header">
     <div class="container">
-      <h1>MEA Triazine 78% H2S Scavenger</h1>
+      <h1>MEA Triazine 80% H2S Scavenger</h1>
       <p>Efficient hydrogen sulfide scavenger for oil & gas industry applications</p>
+      <p class="available-grades">Also available in: 40%, 50%, and 60% grades</p>
     </div>
   </section>
 
@@ -173,7 +262,7 @@
         <div class="col-md-7">
           <h2>Product Overview</h2>
           <p>
-            MEA Triazine 78% is a high-performance H2S scavenger used primarily in the oil & gas industry.
+            MEA Triazine 80% is a high-performance H2S scavenger used primarily in the oil & gas industry.
             It efficiently removes hydrogen sulfide from natural gas, crude oil, and other industrial process streams,
             ensuring safe operations and compliance with environmental standards.
           </p>
@@ -191,7 +280,7 @@
               </tr>
               <tr>
                 <td>Purity</td>
-                <td>78%</td>
+                <td>80%</td>
               </tr>
               <tr>
                 <td>Appearance</td>
@@ -217,6 +306,266 @@
         </div>
       </div>
 
+
+
+      <!-- Grade Tabs -->
+      <div class="nav-tabs-wrapper">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="#grade40">40% Grade</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#grade50">50% Grade</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#grade60">60% Grade</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#grade80">80% Grade</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <!-- 40% -->
+          <div class="tab-pane fade show active" id="grade40" role="tabpanel">
+            <div class="spec-table">
+              <table>
+                <tr>
+                  <th>Specification</th>
+                  <th>Details</th>
+                </tr>
+                <tr>
+                  <td>Chemical Name</td>
+                  <td>MEA Triazine</td>
+                </tr>
+                <tr>
+                  <td>Purity</td>
+                  <td>40%</td>
+                </tr>
+                <tr>
+                  <td>Appearance</td>
+                  <td>Pale yellow to light brown liquid</td>
+                </tr>
+                <tr>
+                  <td>Density (25°C)</td>
+                  <td>1.05 – 1.10 g/cm³</td>
+                </tr>
+                <tr>
+                  <td>Viscosity</td>
+                  <td>Low (easy to handle)</td>
+                </tr>
+                <tr>
+                  <td>Packaging</td>
+                  <td>200L HDPE Drums / IBC Tank</td>
+                </tr>
+                <tr>
+                  <td>Application</td>
+                  <td>General H2S scavenging in light hydrocarbon streams</td>
+                </tr>
+              </table>
+            </div>
+            <div class="action-buttons">
+              <a href="{% static 'media/VCP-040-TDS.pdf' %}" class="btn-secondary" download>Download TDS</a>
+              <a href="{% static 'media/VCP-040-COA.pdf' %}" class="btn-secondary" download>Download COA</a>
+            </div>
+          </div>
+
+          <!-- 50% -->
+          <div class="tab-pane fade" id="grade50" role="tabpanel">
+            <div class="spec-table">
+              <table>
+                <tr>
+                  <th>Specification</th>
+                  <th>Details</th>
+                </tr>
+                <tr>
+                  <td>Chemical Name</td>
+                  <td>MEA Triazine</td>
+                </tr>
+                <tr>
+                  <td>Purity</td>
+                  <td>50%</td>
+                </tr>
+                <tr>
+                  <td>Appearance</td>
+                  <td>Clear to pale yellow liquid</td>
+                </tr>
+                <tr>
+                  <td>Density (25°C)</td>
+                  <td>1.07 – 1.12 g/cm³</td>
+                </tr>
+                <tr>
+                  <td>Viscosity</td>
+                  <td>Moderate (balanced handling)</td>
+                </tr>
+                <tr>
+                  <td>Packaging</td>
+                  <td>200L HDPE Drums / IBC Tank</td>
+                </tr>
+                <tr>
+                  <td>Application</td>
+                  <td>Suitable for moderate H2S levels in natural gas & crude</td>
+                </tr>
+              </table>
+            </div>
+            <div class="action-buttons">
+              <a href="{% static 'media/VCP-050-TDS.pdf' %}" class="btn-secondary" download>Download TDS</a>
+              <a href="{% static 'media/VCP-050-COA.pdf' %}" class="btn-secondary" download>Download COA</a>
+            </div>
+          </div>
+
+          <!-- 60% -->
+          <div class="tab-pane fade" id="grade60" role="tabpanel">
+            <div class="spec-table">
+              <table>
+                <tr>
+                  <th>Specification</th>
+                  <th>Details</th>
+                </tr>
+                <tr>
+                  <td>Chemical Name</td>
+                  <td>MEA Triazine</td>
+                </tr>
+                <tr>
+                  <td>Purity</td>
+                  <td>60%</td>
+                </tr>
+                <tr>
+                  <td>Appearance</td>
+                  <td>Clear yellow liquid</td>
+                </tr>
+                <tr>
+                  <td>Density (25°C)</td>
+                  <td>1.10 – 1.14 g/cm³</td>
+                </tr>
+                <tr>
+                  <td>Viscosity</td>
+                  <td>Medium-High</td>
+                </tr>
+                <tr>
+                  <td>Storage Stability</td>
+                  <td>Excellent – longer shelf life</td>
+                </tr>
+                <tr>
+                  <td>Application</td>
+                  <td>Heavy-duty scavenging for higher H2S concentrations</td>
+                </tr>
+              </table>
+            </div>
+            <div class="action-buttons">
+              <a href="{% static 'media/VCP-060-TDS.pdf' %}" class="btn-secondary" download>Download TDS</a>
+              <a href="{% static 'media/VCP-060-COA.pdf' %}" class="btn-secondary" download>Download COA</a>
+            </div>
+          </div>
+
+          <!-- 80% -->
+          <div class="tab-pane fade" id="grade80" role="tabpanel">
+            <div class="spec-table">
+              <table>
+                <tr>
+                  <th>Specification</th>
+                  <th>Details</th>
+                </tr>
+                <tr>
+                  <td>Chemical Name</td>
+                  <td>MEA Triazine</td>
+                </tr>
+                <tr>
+                  <td>Purity</td>
+                  <td>80%</td>
+                </tr>
+                <tr>
+                  <td>Appearance</td>
+                  <td>Clear, viscous liquid</td>
+                </tr>
+                <tr>
+                  <td>Density (25°C)</td>
+                  <td>1.14 – 1.18 g/cm³</td>
+                </tr>
+                <tr>
+                  <td>Viscosity</td>
+                  <td>High (more concentrated)</td>
+                </tr>
+                <tr>
+                  <td>Storage Stability</td>
+                  <td>Excellent – recommended for export</td>
+                </tr>
+                <tr>
+                  <td>Application</td>
+                  <td>High-strength scavenger for severe H2S environments</td>
+                </tr>
+              </table>
+            </div>
+            <div class="action-buttons">
+              <a href="{% static 'media/VCP-080-TDS.pdf' %}" class="btn-secondary" download>Download TDS</a>
+              <a href="{% static 'media/VCP-080-COA.pdf' %}" class="btn-secondary" download>Download COA</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparison Table -->
+      <div class="spec-table" id="comparison-table-wrapper">
+        <table id="comparison-table">
+          <tr>
+            <th>Specification</th>
+            <th class="grade-col col-40">40%</th>
+            <th class="grade-col col-50">50%</th>
+            <th class="grade-col col-60">60%</th>
+            <th class="grade-col col-80">80%</th>
+          </tr>
+          <tr>
+            <td>Chemical Name</td>
+            <td class="grade-col col-40">MEA Triazine</td>
+            <td class="grade-col col-50">MEA Triazine</td>
+            <td class="grade-col col-60">MEA Triazine</td>
+            <td class="grade-col col-80">MEA Triazine</td>
+          </tr>
+          <tr>
+            <td>Purity</td>
+            <td class="grade-col col-40">40%</td>
+            <td class="grade-col col-50">50%</td>
+            <td class="grade-col col-60">60%</td>
+            <td class="grade-col col-80">80%</td>
+          </tr>
+          <tr>
+            <td>Appearance</td>
+            <td class="grade-col col-40">Pale yellow to light brown liquid</td>
+            <td class="grade-col col-50">Clear to pale yellow liquid</td>
+            <td class="grade-col col-60">Clear yellow liquid</td>
+            <td class="grade-col col-80">Clear, viscous liquid</td>
+          </tr>
+          <tr>
+            <td>Density (25°C)</td>
+            <td class="grade-col col-40">1.05 – 1.10 g/cm³</td>
+            <td class="grade-col col-50">1.07 – 1.12 g/cm³</td>
+            <td class="grade-col col-60">1.10 – 1.14 g/cm³</td>
+            <td class="grade-col col-80">1.14 – 1.18 g/cm³</td>
+          </tr>
+          <tr>
+            <td>Viscosity</td>
+            <td class="grade-col col-40">Low (easy to handle)</td>
+            <td class="grade-col col-50">Moderate (balanced handling)</td>
+            <td class="grade-col col-60">Medium-High</td>
+            <td class="grade-col col-80">High (more concentrated)</td>
+          </tr>
+          <tr>
+            <td>Storage Stability</td>
+            <td class="grade-col col-40"></td>
+            <td class="grade-col col-50"></td>
+            <td class="grade-col col-60">Excellent – longer shelf life</td>
+            <td class="grade-col col-80">Excellent – recommended for export</td>
+          </tr>
+          <tr>
+            <td>Application</td>
+            <td class="grade-col col-40">General H2S scavenging in light hydrocarbon streams</td>
+            <td class="grade-col col-50">Suitable for moderate H2S levels in natural gas & crude</td>
+            <td class="grade-col col-60">Heavy-duty scavenging for higher H2S concentrations</td>
+            <td class="grade-col col-80">High-strength scavenger for severe H2S environments</td>
+          </tr>
+        </table>
+      </div>
+
+
       <!-- Applications Section -->
       <div class="applications">
         <h3>Applications</h3>
@@ -234,6 +583,36 @@
   <!-- Footer -->
   {% include 'footer.html' %}
 
+  <script>
+    // Sync tab and comparison table column
+    document.addEventListener('DOMContentLoaded', function () {
+      function setActiveCol(grade) {
+        // Remove all highlights
+        document.querySelectorAll('.grade-col').forEach(function (el) {
+          el.classList.remove('active-col');
+        });
+        // Highlight selected column
+        document.querySelectorAll('.col-' + grade).forEach(function (el) {
+          el.classList.add('active-col');
+        });
+      }
+
+      // Initial highlight (40%)
+      setActiveCol('40');
+
+      // Listen for tab clicks
+      document.querySelectorAll('.nav-link').forEach(function (tab) {
+        tab.addEventListener('shown.bs.tab', function (e) {
+          const href = tab.getAttribute('href');
+          if (href.includes('40')) setActiveCol('40');
+          else if (href.includes('50')) setActiveCol('50');
+          else if (href.includes('60')) setActiveCol('60');
+          else if (href.includes('80')) setActiveCol('80');
+        });
+      });
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
