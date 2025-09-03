@@ -1,8 +1,9 @@
+{% load static %}
 <style>
     /* Header & Navigation */
     header {
         background-color: #f9f9f9;
-        padding: 1rem 0;
+        padding: 0.1rem 0;
         position: sticky;
         top: 0;
         z-index: 1000;
@@ -16,36 +17,55 @@
         flex-wrap: wrap;
     }
 
-    /* Responsive Navbar Styles */
     .navbar-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 100%;
-        background: #f9f9f9;
-        padding: 0.8rem 1.2rem;
+        background: #ffffff;
+        padding: 0.8rem 0.8rem;
         position: relative;
-        max-width: 1200px;
-        margin: 0 auto;
     }
 
     .logo {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: #1a365d;
-        text-decoration: none;
-        margin-left: 0;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 20px;
+        text-decoration: none;
         z-index: 1001;
+    }
+
+    .logo-img {
+        height: 80px;
+        width: auto;
+        display: block;
+    }
+
+    .logo-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.1;
+    }
+
+    .logo-text .vasudev {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #1a365d;
+        letter-spacing: 1px;
+    }
+
+    .logo-text .chemo-pharma {
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: #1a365d;
+        letter-spacing: 0.5px;
+        margin-top: 2px;
     }
 
     .menu-toggle {
         display: none;
         background: none;
         border: none;
-        color: #1a365d;
+        color: #000000;
         font-size: 1.8rem;
         cursor: pointer;
         padding: 0.5rem;
@@ -66,10 +86,17 @@
         margin: 0;
         padding: 0;
         align-items: center;
+        justify-content: flex-end;
+        flex: 1;
+    }
+
+    .nav-links li {
+        display: flex;
+        align-items: center;
     }
 
     .nav-links li a {
-        color: #1a365d;
+        color: #000000;
         text-decoration: none;
         font-size: 1.1rem;
         font-weight: 500;
@@ -124,6 +151,18 @@
             font-size: 1rem;
             padding: 0.4rem 0.8rem;
         }
+
+        .logo-img {
+            height: 65px;
+        }
+
+        .logo-text .vasudev {
+            font-size: 1.2rem;
+        }
+
+        .logo-text .chemo-pharma {
+            font-size: 1.3rem;
+        }
     }
 
     /* Mobile Styles */
@@ -134,8 +173,16 @@
             padding: 0.8rem 1rem;
         }
 
-        .logo {
-            font-size: 1.4rem;
+        .logo-img {
+            height: 65px;
+        }
+
+        .logo-text .vasudev {
+            font-size: 1.2rem;
+        }
+
+        .logo-text .chemo-pharma {
+            font-size: 1.3rem;
         }
 
         .menu-toggle {
@@ -173,7 +220,7 @@
         .nav-links li a {
             padding: 1rem 1.5rem;
             border-bottom: 1px solid #e2e8f0;
-            color: #1a365d;
+            color: #000000;
             display: block;
             width: 100%;
             font-size: 1rem;
@@ -236,8 +283,16 @@
             padding: 0.6rem 0.8rem;
         }
 
-        .logo {
+        .logo-img {
+            height: 45px;
+        }
+
+        .logo-text .vasudev {
             font-size: 1.2rem;
+        }
+
+        .logo-text .chemo-pharma {
+            font-size: 1.3rem;
         }
 
         .menu-toggle {
@@ -266,8 +321,16 @@
             padding: 0.5rem;
         }
 
-        .logo {
-            font-size: 1rem;
+        .logo-img {
+            height: 55px;
+        }
+
+        .logo-text .vasudev {
+            font-size: 1.2rem;
+        }
+
+        .logo-text .chemo-pharma {
+            font-size: 1.3rem;
         }
 
         .menu-toggle {
@@ -280,30 +343,27 @@
         }
     }
 
-    /* Animation for mobile menu */
     @keyframes slideDown {
         from {
             opacity: 0;
             transform: translateY(-10px);
         }
+
         to {
             opacity: 1;
             transform: translateY(0);
         }
     }
 
-    /* Smooth transitions */
     .nav-links {
         transition: all 0.3s ease;
     }
 
-    /* Ensure proper stacking */
     .navbar-container {
         position: relative;
         z-index: 1000;
     }
 
-    /* Large language list usability */
     .dropdown-menu.language-menu {
         max-height: 320px;
         overflow-y: auto;
@@ -311,9 +371,14 @@
     }
 </style>
 
-
 <nav class="navbar-container">
-    <a href="/" class="logo"></a>
+    <a href="/" class="logo">
+        <img src="{% static 'media/logo.jpg' %}" alt="Vasudev Chemo Pharma Logo" class="logo-img">
+        <span class="logo-text">
+            <span class="vasudev">Vasudev</span>
+            <span class="chemo-pharma">Chemo Pharma</span>
+        </span>
+    </a>
     <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu">
         <span>☰</span>
     </button>
@@ -322,10 +387,11 @@
         <li><a href="/aboutus">About</a></li>
         <li><a href="/products">Products</a></li>
         <li><a href="/ourservices">Our Services</a></li>
-        <li><a href="/#contact">Contact</a></li>
+        <li><a href="#contact">Contact</a></li>
         <li>
             <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown"
+                    aria-expanded="false">
                     Select Your Language
                 </button>
                 <ul class="dropdown-menu language-menu" aria-labelledby="languageDropdown" id="languageMenu"></ul>
@@ -339,17 +405,17 @@
 
 <script>
     // Mobile Navigation Toggle
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const menuToggle = document.getElementById('menuToggle');
         const navLinks = document.getElementById('navLinks');
-        
+
         if (menuToggle && navLinks) {
-            menuToggle.addEventListener('click', function(e) {
+            menuToggle.addEventListener('click', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
-                
+
                 navLinks.classList.toggle('active');
-                
+
                 // Update hamburger icon
                 const icon = menuToggle.querySelector('span');
                 if (navLinks.classList.contains('active')) {
@@ -360,11 +426,11 @@
                     menuToggle.setAttribute('aria-expanded', 'false');
                 }
             });
-            
+
             // Close mobile menu when clicking on a link
             const navLinkItems = navLinks.querySelectorAll('a');
             navLinkItems.forEach(link => {
-                link.addEventListener('click', function() {
+                link.addEventListener('click', function () {
                     if (window.innerWidth <= 768) {
                         navLinks.classList.remove('active');
                         const icon = menuToggle.querySelector('span');
@@ -373,9 +439,9 @@
                     }
                 });
             });
-            
+
             // Close mobile menu when clicking outside
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', function (e) {
                 if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
                     navLinks.classList.remove('active');
                     const icon = menuToggle.querySelector('span');
@@ -383,9 +449,9 @@
                     menuToggle.setAttribute('aria-expanded', 'false');
                 }
             });
-            
+
             // Handle window resize
-            window.addEventListener('resize', function() {
+            window.addEventListener('resize', function () {
                 if (window.innerWidth > 768) {
                     navLinks.classList.remove('active');
                     const icon = menuToggle.querySelector('span');
@@ -422,7 +488,7 @@
             select.dispatchEvent(event);
         } else {
             // Retry shortly until the widget is ready
-            setTimeout(function() { setLanguage(langCode); }, 150);
+            setTimeout(function () { setLanguage(langCode); }, 150);
         }
     }
 
@@ -458,7 +524,6 @@
         });
     }
 
-    
     document.addEventListener('click', function (e) {
         var link = e.target.closest('.lang-select');
         if (!link) return;
