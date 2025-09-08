@@ -369,6 +369,29 @@
         overflow-y: auto;
         width: 260px;
     }
+
+    /* Desktop default (keep as is or adjust as needed) */
+    .hero-slider {
+        height: 100vh;
+        min-height: 600px;
+        /* ...other styles... */
+    }
+
+    /* Mobile styles: reduce hero slider height */
+    @media (max-width: 768px) {
+        .hero-slider {
+            height: 350px;
+            /* or another value you prefer */
+            min-height: 0;
+            max-height: 60vh;
+            /* prevents it from being too tall on small screens */
+        }
+
+        .hero-slider .slide {
+            min-height: 350px;
+            /* match the hero-slider height */
+        }
+    }
 </style>
 
 <nav class="navbar-container">
@@ -387,7 +410,7 @@
         <li><a href="/aboutus">About</a></li>
         <li><a href="/products">Products</a></li>
         <li><a href="/ourservices">Our Services</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="/#contact">Contact</a></li>
         <li>
             <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown"
@@ -469,6 +492,7 @@
                 pageLanguage: 'en',
                 autoDisplay: false
             }, 'google_translate_element');
+
         }
     }
 

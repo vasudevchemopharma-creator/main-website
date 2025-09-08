@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popup Notice</title>
+    <style>
+        /* Overlay background */
+        .popup-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Card box */
+        .popup-card {
+            background: #fff;
+            padding: 1.8rem;
+            max-width: 360px;
+            width: 90%;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .popup-card h2 {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: #1a365d;
+        }
+
+        .popup-card p {
+            font-size: 1rem;
+            color: #444;
+            margin-bottom: 1.2rem;
+            line-height: 1.5;
+        }
+
+        /* Button + countdown row */
+        .popup-actions {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .popup-card button {
+            background: linear-gradient(135deg, #e85a4f, #d62d20);
+            color: #fff;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s;
+        }
+
+        .popup-card button:hover {
+            background: linear-gradient(135deg, #d62d20, #b71c1c);
+            transform: scale(1.05);
+        }
+
+        #countdown {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Show state */
+        .popup-overlay.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .popup-overlay.show .popup-card {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Popup -->
+    <div class="popup-overlay" id="mobilePopup">
+        <div class="popup-card">
+            <h2>Notice</h2>
+            <p>
+                For the best view, open our website on a <strong>Desktop</strong>.<br>
+                This website is under development for mobile users.
+            </p>
+            <div class="popup-actions">
+                <button id="closePopup">Got it</button>
+                <span id="countdown">(Closes in 5s)</span>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            if (window.innerWidth < 768) {
+                const popup = document.getElementById("mobilePopup");
+                const closeBtn = document.getElementById("closePopup");
+                const countdownEl = document.getElementById("countdown");
+
+                popup.classList.add("show");
+
+                let seconds = 5;
+                countdownEl.textContent = `(Closes in ${seconds}s)`;
+
+                const timer = setInterval(() => {
+                    seconds--;
+                    countdownEl.textContent = `(Closes in ${seconds}s)`;
+                    if (seconds <= 0) {
+                        clearInterval(timer);
+                        popup.classList.remove("show");
+                    }
+                }, 1000);
+
+                closeBtn.addEventListener("click", () => {
+                    clearInterval(timer);
+                    popup.classList.remove("show");
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>

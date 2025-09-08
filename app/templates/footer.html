@@ -2,7 +2,7 @@
     footer {
         background: linear-gradient(135deg, #1A2A80, #38b2ac);
         color: white;
-        padding: 4rem 0 2rem;
+        padding: 4rem 0 4rem;
     }
 
     .footer-content {
@@ -47,6 +47,50 @@
             text-align: center;
         }
     }
+
+    @media (max-width: 600px) {
+        footer {
+            padding: 1.2rem 0 0.5rem;
+        }
+
+        .footer-content {
+            grid-template-columns: 1fr;
+            gap: 0.7rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .footer-section {
+            margin-bottom: 0.7rem;
+            padding: 0 8px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.05rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            font-size: 0.95rem;
+            margin-bottom: 0.4rem;
+        }
+
+        /* Hide less important sections for mobile */
+        .footer-section:nth-child(3) {
+            /* Products */
+            display: none;
+        }
+
+        .footer-section:nth-child(2) a:not(:first-child):not(:last-child) {
+            /* Only show Home and Contact in Quick Links */
+            display: none;
+        }
+
+        .footer-bottom {
+            font-size: 0.9rem;
+            padding-top: 1rem;
+        }
+    }
 </style>
 <footer>
     <div class="container">
@@ -84,10 +128,6 @@
                 <p>Sales Team : +91 8128372559</p>
                 <p>Email: info@vasudevchemopharma.com</p>
             </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p>Designed with precision for chemical excellence | Privacy Policy | Terms of Service</p>
         </div>
     </div>
 </footer>
