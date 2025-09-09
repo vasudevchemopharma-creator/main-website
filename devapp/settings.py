@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    "high-zulema-bookl-legal-dvisior-93ab44c4.koyeb.app",
+    "profound-abbie-vasudevchemopharma-creator-cc9be6db.koyeb.app",
     "vasudevchemopharma.com",
 ]
 
