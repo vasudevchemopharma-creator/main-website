@@ -236,7 +236,7 @@
   <header>
     {% include 'navbar.html' %}
   </header>
-  
+
   <!-- Page Header -->
   <section class="page-header">
     <div class="container">
@@ -638,6 +638,7 @@
       </div>
     </div>
   </div>
+  <!-- Add this script section to replace the existing form submission script -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const modal = new bootstrap.Modal(document.getElementById("downloadModal"));
@@ -667,16 +668,52 @@
           return;
         }
 
-        // Trigger file download
-        const link = document.createElement("a");
-        link.href = fileUrl;
-        link.download = fileUrl.split("/").pop();
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        // Show loading state
+        const submitBtn = emailForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Saving...';
+        submitBtn.disabled = true;
 
-        // Close modal
-        modal.hide();
+        // Send email to backend
+        fetch('/save-email/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            file_url: fileUrl
+          })
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              // Trigger file download
+              const link = document.createElement("a");
+              link.href = fileUrl;
+              link.download = fileUrl.split("/").pop();
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+
+              // Close modal
+              modal.hide();
+
+              // Show success message (optional)
+              console.log('Email saved successfully');
+            } else {
+              alert('Error: ' + (data.error || 'Failed to save email'));
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Network error occurred. Please try again.');
+          })
+          .finally(() => {
+            // Reset button state
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+          });
       });
     });
   </script>

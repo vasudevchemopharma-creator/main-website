@@ -23,5 +23,6 @@ urlpatterns = [
     path('ourservices', views.ourservices, name='ourservices'),
     path('products', views.products, name='products'),
     path('MEA-Triazine', views.triazine, name='MEA-Triazine'),
+    path('save-email/', views.save_email_for_download, name='save_email'),
 ]
 
