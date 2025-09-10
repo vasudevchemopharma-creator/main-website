@@ -999,8 +999,34 @@
                 </button>
             </p>
         </div>
-        <div class="slider-center-text slider-text-2">Trusted Partner for Quality Chemicals</div>
-        <div class="slider-center-text slider-text-3">Delivering Innovation & Excellence</div>
+        <div class="slider-center-text slider-text-2">Trusted Partner for Quality Chemicals
+            <p>
+                <button class="cssbuttons-io"
+                    onclick="window.location.href='https://vasudevchemopharma.com/MEA-Triazine'">
+                    <span>
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 0h24v24H0z" fill="none"></path>
+                            <path
+                                d="M24 12l-5.657 5.657-1.414-1.414L21.172 12l-4.243-4.243 1.414-1.414L24 12zM2.828 12l4.243 4.243-1.414 1.414L0 12l5.657-5.657L7.07 7.757 2.828 12zm6.96 9H7.66l6.552-18h2.128L9.788 21z"
+                                fill="currentColor"></path>
+                        </svg>
+                        Read more
+                    </span>
+                </button>
+            </p>
+        </div>
+        <div class="slider-center-text slider-text-3">Delivering Innovation & Excellence
+            <p><button class="cssbuttons-io">
+                    <span><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 0h24v24H0z" fill="none"></path>
+                            <path
+                                d="M24 12l-5.657 5.657-1.414-1.414L21.172 12l-4.243-4.243 1.414-1.414L24 12zM2.828 12l4.243 4.243-1.414 1.414L0 12l5.657-5.657L7.07 7.757 2.828 12zm6.96 9H7.66l6.552-18h2.128L9.788 21z"
+                                fill="currentColor"></path>
+                        </svg>
+                        Read more</span>
+                </button>
+            </p>
+        </div>
 
         <button class="nav-btn nav-prev" aria-label="Previous slide">
             <i class="bi bi-chevron-left"></i>
@@ -1078,30 +1104,36 @@
             <h2 class="section-title">Contact Us</h2>
             <div class="contact-content">
                 <div class="contact-form">
-                    <form id="contactForm">
+                    <form id="contactForm" method="post" action="{% url 'contact' %}">
+                        {% csrf_token %}
+
                         <div class="form-group">
-                            <label for="name">Full Name *</label>
-                            <input type="text" id="name" name="name" required>
+                            <label for="id_name">Full Name *</label>
+                            <input type="text" id="id_name" name="name" class="form-control"
+                                placeholder="Enter your full name" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="email">Email Address *</label>
-                            <input type="email" id="email" name="email" required>
+                            <label for="id_email">Email Address *</label>
+                            <input type="email" id="id_email" name="email" class="form-control"
+                                placeholder="Enter your email address" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="company">Company Name</label>
-                            <input type="text" id="company" name="company">
+                            <label for="id_company">Company Name</label>
+                            <input type="text" id="id_company" name="company" class="form-control"
+                                placeholder="Enter your company name (optional)">
                         </div>
 
                         <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone">
+                            <label for="id_phone">Phone Number</label>
+                            <input type="tel" id="id_phone" name="phone" class="form-control"
+                                placeholder="Enter your phone number (optional)">
                         </div>
 
                         <div class="form-group">
-                            <label for="product">Product Interest</label>
-                            <select id="product" name="product">
+                            <label for="id_product">Product Interest</label>
+                            <select id="id_product" name="product" class="form-control">
                                 <option value="">Select a product</option>
                                 <option value="acetic-acid">Acetic Acid</option>
                                 <option value="sodium-hydroxide">Sodium Hydroxide</option>
@@ -1112,15 +1144,16 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="message">Message *</label>
-                            <textarea id="message" name="message" placeholder="Tell us about your requirements..."
-                                required></textarea>
+                            <label for="id_message">Message *</label>
+                            <textarea id="id_message" name="message" class="form-control" rows="5"
+                                placeholder="Tell us about your requirements..." required></textarea>
                         </div>
 
-                        <button type="submit" class="submit-btn">Send Message</button>
+                        <button type="submit" class="btn btn-primary submit-btn">
+                            Send Message
+                        </button>
                     </form>
                 </div>
-
                 <div class="contact-info">
                     <h3>Get In Touch</h3>
                     <div class="contact-item">
@@ -1151,6 +1184,22 @@
     {% include 'footer.html' %}
 
     <script>
+        // CSRF helper: get csrftoken from cookie
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -1181,21 +1230,40 @@
             // Show loading state
             const submitBtn = contactForm.querySelector('.submit-btn');
             const originalText = submitBtn.textContent;
-            submitBtn.classList.add('loading');
+            submitBtn.textContent = "Sending...";
             submitBtn.disabled = true;
 
-            // Simulate form submission
-            setTimeout(() => {
-                // Remove loading state
-                submitBtn.classList.remove('loading');
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
+            // Send AJAX request to Django
+            fetch("{% url 'contact_ajax' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrftoken,
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => response.json())
+                .then(result => {
+                    // Remove loading state
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
 
-                // Show success message
-                alert('Thank you for your message! We will get back to you soon.');
-                contactForm.reset();
-            }, 2000);
+                    if (result.success) {
+                        alert(result.message); // Success message from Django
+                        contactForm.reset();
+                    } else {
+                        alert(result.message); // Show error
+                        console.log(result.errors); // Debug form errors in console
+                    }
+                })
+                .catch(error => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    alert("An error occurred. Please try again.");
+                    console.error(error);
+                });
         });
+
 
         // Fade in animation on scroll
         const observerOptions = {
@@ -1211,11 +1279,6 @@
             });
         }, observerOptions);
 
-        // Observe all sections for fade-in animation
-        document.querySelectorAll('.section').forEach(section => {
-            section.classList.add('fade-in');
-            observer.observe(section);
-        });
 
         // Read More button functionality
         document.querySelectorAll('.read-more-btn').forEach(button => {

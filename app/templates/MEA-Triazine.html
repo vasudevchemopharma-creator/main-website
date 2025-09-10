@@ -615,6 +615,9 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Email Popup Modal -->
+  <!-- Replace your existing modal and script sections with this -->
+
+  <!-- Email Popup Modal -->
   <div class="modal fade" id="downloadModal" tabindex="-1" aria-labelledby="downloadModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content p-3">
@@ -638,13 +641,58 @@
       </div>
     </div>
   </div>
-  <!-- Add this script section to replace the existing form submission script -->
+
+  <!-- Countdown Modal -->
+  <div class="modal fade" id="countdownModal" tabindex="-1" aria-labelledby="countdownModalLabel" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content p-4 text-center">
+        <div class="modal-body">
+          <div class="spinner-border text-primary mb-3" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <h5 class="mb-3">Preparing Your Download</h5>
+          <p class="mb-2">File will download in</p>
+          <h2 class="text-primary mb-0" id="countdown">3</h2>
+          <small class="text-muted">seconds</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* Countdown Modal Styling */
+    #countdownModal .modal-content {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    #countdownModal .spinner-border {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    #countdown {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #3B38A0;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    #countdownModal .modal-body {
+      padding: 2rem;
+    }
+  </style>
+
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      const modal = new bootstrap.Modal(document.getElementById("downloadModal"));
+      const downloadModal = new bootstrap.Modal(document.getElementById("downloadModal"));
+      const countdownModal = new bootstrap.Modal(document.getElementById("countdownModal"));
       const emailForm = document.getElementById("emailForm");
       const emailInput = document.getElementById("emailInput");
       const fileUrlField = document.getElementById("fileUrl");
+      const countdownElement = document.getElementById("countdown");
 
       // Open modal on button click
       document.querySelectorAll(".download-btn").forEach(btn => {
@@ -652,9 +700,36 @@
           const fileUrl = this.getAttribute("data-file");
           fileUrlField.value = fileUrl;
           emailInput.value = ""; // reset input
-          modal.show();
+          downloadModal.show();
         });
       });
+
+      // Countdown function
+      function startCountdown(fileUrl) {
+        let timeLeft = 3;
+        countdownElement.textContent = timeLeft;
+        countdownModal.show();
+
+        const timer = setInterval(() => {
+          timeLeft--;
+          countdownElement.textContent = timeLeft;
+
+          if (timeLeft <= 0) {
+            clearInterval(timer);
+
+            // Trigger file download
+            const link = document.createElement("a");
+            link.href = fileUrl;
+            link.download = fileUrl.split("/").pop();
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // Close countdown modal
+            countdownModal.hide();
+          }
+        }, 1000);
+      }
 
       // Handle form submit
       emailForm.addEventListener("submit", function (e) {
@@ -688,18 +763,12 @@
           .then(response => response.json())
           .then(data => {
             if (data.success) {
-              // Trigger file download
-              const link = document.createElement("a");
-              link.href = fileUrl;
-              link.download = fileUrl.split("/").pop();
-              document.body.appendChild(link);
-              link.click();
-              document.body.removeChild(link);
+              // Close email modal
+              downloadModal.hide();
 
-              // Close modal
-              modal.hide();
+              // Start countdown and download
+              startCountdown(fileUrl);
 
-              // Show success message (optional)
               console.log('Email saved successfully');
             } else {
               alert('Error: ' + (data.error || 'Failed to save email'));
