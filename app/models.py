@@ -26,10 +26,10 @@ class DownloadEmail(models.Model):
 class Contact(models.Model):
     PRODUCT_CHOICES = [
         ('', 'Select a product'),
-        ('acetic-acid', 'Acetic Acid'),
-        ('sodium-hydroxide', 'Sodium Hydroxide'),
-        ('sulfuric-acid', 'Sulfuric Acid'),
-        ('hydrochloric-acid', 'Hydrochloric Acid'),
+        ('MEA TRIAZINE 78%', 'MEA TRIAZINE 78%'),
+        ('P-TOLUENE SULPHONIC ACID', 'P-TOLUENE SULPHONIC ACID'),
+        ('DIISOPROPYLAMINO ETHYLYNE DIAMINE', 'DIISOPROPYLAMINO ETHYLYNE DIAMINE'),
+        ('SODIUM CUMENE SULPHONATE', 'SODIUM CUMENE SULPHONATE'),
         ('other', 'Other'),
     ]
     
