@@ -969,6 +969,15 @@
 
                 const category = btn.getAttribute('data-category');
 
+                // Update URL without page reload
+                if (category === 'all') {
+                    const newURL = window.location.pathname;
+                    window.history.pushState({}, '', newURL);
+                } else {
+                    const newURL = `${window.location.pathname}?category=${category}`;
+                    window.history.pushState({}, '', newURL);
+                }
+
                 productCards.forEach(card => {
                     if (category === 'all' || card.getAttribute('data-category') === category) {
                         card.classList.remove('hidden');
@@ -1000,7 +1009,52 @@
             });
         });
 
+        // Function to get URL parameter
+        function getURLParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
 
+        // Apply filter on page load if category parameter exists
+        window.addEventListener('DOMContentLoaded', () => {
+            const categoryParam = getURLParameter('category');
+
+            if (categoryParam) {
+                // Find the corresponding category button
+                const targetButton = document.querySelector(`.category-btn[data-category="${categoryParam}"]`);
+
+                if (targetButton) {
+                    // Remove active class from all buttons
+                    document.querySelectorAll('.category-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+
+                    // Add active class to target button
+                    targetButton.classList.add('active');
+
+                    // Filter products
+                    const productCards = document.querySelectorAll('.product-card');
+                    productCards.forEach(card => {
+                        if (card.getAttribute('data-category') === categoryParam) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+
+                    // Scroll to products section smoothly
+                    setTimeout(() => {
+                        const productsSection = document.querySelector('.products-section');
+                        if (productsSection) {
+                            productsSection.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    }, 100);
+                }
+            }
+        });
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {

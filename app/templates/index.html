@@ -693,6 +693,158 @@
             transform: scale(0.95);
         }
 
+        .products {
+            background: #f8fafc;
+            padding: 80px 0;
+        }
+
+        .product-carousel {
+            position: relative;
+            padding: 20px 0;
+            margin: 40px 0;
+        }
+
+        .carousel-container {
+            overflow: hidden;
+            margin: 0 60px;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 30px;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card {
+            min-width: 300px;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #000000, #c4cac1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .product-icon i {
+            font-size: 2rem;
+            color: white;
+        }
+
+        .product-card h3 {
+            color: #1a365d;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .product-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem;
+            text-align: left;
+        }
+
+        .product-list li {
+            color: #4a5568;
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .product-list li:last-child {
+            border-bottom: none;
+        }
+
+        .learn-more-btn {
+            background: linear-gradient(135deg, #4fd1c7, #2d5016);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .learn-more-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(45, 80, 22, 0.3);
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+            z-index: 2;
+        }
+
+        .carousel-btn:hover {
+            background: #f1f5f9;
+        }
+
+        .carousel-btn.prev {
+            left: 0;
+        }
+
+        .carousel-btn.next {
+            right: 0;
+        }
+
+        .carousel-btn i {
+            font-size: 1.5rem;
+            color: #1a365d;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .carousel-container {
+                margin: 0 40px;
+            }
+
+            .product-card {
+                min-width: 260px;
+                padding: 1.5rem;
+            }
+
+            .product-icon {
+                width: 60px;
+                height: 60px;
+            }
+
+            .product-icon i {
+                font-size: 1.5rem;
+            }
+
+            .product-card h3 {
+                font-size: 1.3rem;
+            }
+        }
 
         @keyframes spin {
             0% {
@@ -1125,7 +1277,67 @@
         </div>
     </section>
 
+    <section id="products" class="section products">
+        <div class="container">
+            <h2 class="section-title">Our Product Categories</h2>
+            <div class="product-carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <!-- Industrial Chemicals -->
+                        <div class="product-card">
+                            <div class="product-icon">
+                                <i class="bi bi-building-gear"></i>
+                            </div>
+                            <h3>Industrial Chemicals</h3>
+                            <ul class="product-list">
+                                <li>MEA Triazine 78%</li>
+                                <li>P-Toluene Sulphonic Acid</li>
+                                <li>Sodium Cumene Sulphonate</li>
+                                <li>Industrial Solvents</li>
+                            </ul>
+                            <button class="learn-more-btn">Learn More</button>
+                        </div>
 
+                        <!-- Specialty Chemicals -->
+                        <div class="product-card">
+                            <div class="product-icon">
+                                <i class="bi bi-flask"></i>
+                            </div>
+                            <h3>Specialty Chemicals</h3>
+                            <ul class="product-list">
+                                <li>Custom Formulations</li>
+                                <li>Performance Chemicals</li>
+                                <li>Process Additives</li>
+                                <li>Surface Treatment</li>
+                            </ul>
+                            <button class="learn-more-btn">Learn More</button>
+                        </div>
+
+                        <!-- API & Intermediates -->
+                        <div class="product-card">
+                            <div class="product-icon">
+                                <i class="bi bi-capsule"></i>
+                            </div>
+                            <h3>API & Intermediates</h3>
+                            <ul class="product-list">
+                                <li>Pharmaceutical Intermediates</li>
+                                <li>Custom Synthesis</li>
+                                <li>API Manufacturing</li>
+                                <li>Research Chemicals</li>
+                            </ul>
+                            <button class="learn-more-btn">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-btn prev" aria-label="Previous">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <button class="carousel-btn next" aria-label="Next">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
 
     <!-- Certificates Section -->
     <section id="certificates" class="section certificates">
@@ -1445,6 +1657,60 @@
 
         // On page load, show the first text
         updateSliderText(0, 'left');
+        // Product Carousel
+        const track = document.querySelector('.carousel-track');
+        const cards = Array.from(document.querySelectorAll('.product-card'));
+        const prevButton = document.querySelector('.carousel-btn.prev');
+        const nextButton = document.querySelector('.carousel-btn.next');
+
+        let currentIndex = 0;
+        const cardWidth = cards[0].offsetWidth + 30; // Including gap
+
+        function updateCarousel() {
+            track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+        }
+
+        prevButton.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCarousel();
+            }
+        });
+
+        nextButton.addEventListener('click', () => {
+            if (currentIndex < cards.length - 1) {
+                currentIndex++;
+                updateCarousel();
+            }
+        });
+
+
+        // Handle learn more buttons
+        // Handle learn more buttons - Updated version
+        document.querySelectorAll('.learn-more-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const productCard = button.closest('.product-card');
+                const categoryTitle = productCard.querySelector('h3').textContent.trim();
+
+                // Map category titles to filter values
+                const categoryMap = {
+                    'Industrial Chemicals': 'industrial',
+                    'Specialty Chemicals': 'specialty',
+                    'API & Intermediates': 'api'
+                };
+
+                // Get the filter category
+                const filterCategory = categoryMap[categoryTitle];
+
+                if (filterCategory) {
+                    // Redirect to products page with category parameter
+                    window.location.href = `/products?category=${filterCategory}`;
+                } else {
+                    // Fallback to products page without filter
+                    window.location.href = '/products';
+                }
+            });
+        });
     </script>
 </body>
 
