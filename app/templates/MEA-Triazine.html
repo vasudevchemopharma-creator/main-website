@@ -372,6 +372,66 @@
     .col-80 {
       background: #e6fffa;
     }
+
+    /* FAQ Section */
+    .faq-section {
+      margin-top: 50px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .faq-section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    /* FAQ items stretch full width of screen */
+    .faq-item {
+      border-bottom: 1px solid #ddd;
+      padding: 18px 0;
+      position: relative;
+      /* for arrow */
+    }
+
+    .faq-item h3 {
+      font-size: 1rem;
+      /* reduced size */
+      margin: 0;
+      cursor: pointer;
+      color: #1a2a80;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: color 0.3s ease;
+    }
+
+    .faq-item h3:hover {
+      color: #38b2ac;
+    }
+
+    .faq-item p {
+      display: none;
+      margin-top: 8px;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    .faq-item.active p {
+      display: block;
+    }
+
+    /* Arrow styling and rotation */
+    .arrow {
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.active .arrow {
+      transform: rotate(180deg);
+      /* points up when open */
+    }
   </style>
 </head>
 
@@ -398,7 +458,8 @@
         <!-- Product Image -->
         <div class="col-md-5">
           <div class="image-box">
-            <img src="{% static 'media/MEA-Triazine.jpg' %}" alt="MEA Triazine 80% H2S scavenger product image" loading="lazy">
+            <img src="{% static 'media/MEA-Triazine.jpg' %}" alt="MEA Triazine 80% H2S scavenger product image"
+              loading="lazy">
           </div>
         </div>
 
@@ -406,7 +467,8 @@
         <div class="col-md-7">
           <h2>MEA Triazine 80% – Hydrogen Sulfide Removal Solution</h2>
           <p>
-            <strong>Vasudev Chemo Pharma</strong> is a leading <strong>MEA Triazine manufacturer and exporter in India</strong>, offering
+            <strong>Vasudev Chemo Pharma</strong> is a leading <strong>MEA Triazine manufacturer and exporter in
+              India</strong>, offering
             high-performance <strong>H₂S scavenger chemicals</strong> used for <strong>hydrogen sulfide removal</strong>
             in oil, gas, and refinery operations.
             Our <strong>MEA Triazine 80%</strong> delivers reliable performance in both <strong>onshore and offshore
@@ -496,7 +558,7 @@
                 </tr>
                 <tr>
                   <td>Purity</td>
-                    <td>40%</td>
+                  <td>40%</td>
                 </tr>
                 <tr>
                   <td>Appearance</td>
@@ -737,17 +799,88 @@
       <section class="faq-section" id="faq">
         <h2>Frequently Asked Questions About MEA Triazine</h2>
 
-        <h3>What is MEA Triazine?</h3>
-        <p>MEA Triazine is a triazine-based compound widely used as a hydrogen sulfide scavenger in oil and gas
-          industries.</p>
+        <div class="faq-item">
+          <h3>What is MEA Triazine? <span class="arrow">&#9662;</span></h3>
+          <p>MEA Triazine is a triazine-based compound widely used as a hydrogen sulfide (H₂S) scavenger in oil and gas
+            industries.</p>
+        </div>
 
-        <h3>What industries use MEA Triazine?</h3>
-        <p>MEA Triazine is used in oilfields, refineries, wastewater treatment, and paper industries for efficient H₂S
-          removal.</p>
+        <div class="faq-item">
+          <h3>What industries use MEA Triazine?<span class="arrow">&#9662;</span></h3>
+          <p>MEA Triazine is used in oilfields, refineries, wastewater treatment, and paper industries for efficient H₂S
+            removal.</p>
+        </div>
 
-        <h3>Do you export MEA Triazine?</h3>
-        <p>Yes, Vasudev Chemo Pharma exports MEA Triazine globally, with a focus on Gulf countries and international oil
-          & gas sectors.</p>
+        <div class="faq-item">
+          <h3>Do you export MEA Triazine?<span class="arrow">&#9662;</span></h3>
+          <p>Yes, Vasudev Chemo Pharma exports MEA Triazine globally, with a focus on Gulf countries and international
+            oil & gas sectors.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Is MEA Triazine suitable for crude oil treatment?<span class="arrow">&#9662;</span></h3>
+          <p>Yes, MEA Triazine effectively removes hydrogen sulfide from crude oil and helps prevent corrosion and odor
+            issues.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Is MEA Triazine formaldehyde-free?<span class="arrow">&#9662;</span></h3>
+          <p>Yes, MEA Triazine is formaldehyde-free, making it safer for both handling and the environment.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What is the typical dosage of MEA Triazine?<span class="arrow">&#9662;</span> </h3>
+          <p>The dosage depends on H₂S concentration and system conditions. Typically, 1 mole of triazine reacts with 2
+            moles of H₂S.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What is the shelf life of MEA Triazine?<span class="arrow">&#9662;</span></h3>
+          <p>MEA Triazine has a typical shelf life of 12 months when stored in tightly sealed containers away from
+            direct sunlight.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Is MEA Triazine water soluble?<span class="arrow">&#9662;</span></h3>
+          <p>Yes, MEA Triazine is highly water soluble, making it ideal for aqueous H₂S scavenging systems.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>How does MEA Triazine work?<span class="arrow">&#9662;</span></h3>
+          <p>MEA Triazine reacts chemically with hydrogen sulfide to form stable, non-volatile by-products that prevent
+            H₂S release.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Can MEA Triazine be used in gas sweetening?<span class="arrow">&#9662;</span></h3>
+          <p>Yes, it is frequently used for gas sweetening applications to remove H₂S from natural gas streams.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What is the appearance of MEA Triazine?<span class="arrow">&#9662;</span></h3>
+          <p>It appears as a clear to pale yellow liquid with a mild amine-like odor.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What are the storage conditions for MEA Triazine?<span class="arrow">&#9662;</span></h3>
+          <p>Store in cool, dry, and well-ventilated areas in HDPE or stainless-steel containers.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Can MEA Triazine be mixed with other chemicals?<span class="arrow">&#9662;</span></h3>
+          <p>It should not be mixed with oxidizing or acidic agents as it may cause unwanted reactions.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Is MEA Triazine environmentally safe?<span class="arrow">&#9662;</span></h3>
+          <p>Yes, it produces non-toxic, biodegradable by-products, making it an environmentally friendly scavenger.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Where can I buy MEA Triazine in India? <span class="arrow">&#9662;</span></h3>
+          <p>You can purchase MEA Triazine directly from Vasudev Chemo Pharma at <a
+              href="https://vasudevchemopharma.com/">vasudevchemopharma.com</a>.</p>
+        </div>
       </section>
     </div>
   </section>
@@ -856,6 +989,20 @@
   </style>
 
   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const faqs = document.querySelectorAll(".faq-item h3");
+
+      faqs.forEach((question) => {
+        question.addEventListener("click", () => {
+          document.querySelectorAll(".faq-item").forEach((item) => {
+            if (item !== question.parentElement) {
+              item.classList.remove("active");
+            }
+          });
+          question.parentElement.classList.toggle("active");
+        });
+      });
+    });
     document.addEventListener("DOMContentLoaded", function () {
       const downloadModalEl = document.getElementById("downloadModal");
       const downloadModal = new bootstrap.Modal(downloadModalEl);
