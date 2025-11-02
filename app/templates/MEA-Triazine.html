@@ -784,6 +784,12 @@
         </table>
       </div>
 
+      <video id="meaVideo" controls loop style="width: 100%; max-width: 800px; display: block; margin: 0 auto;" class="mt-5">
+        <source src="{% static 'media/MEATriazineVideo.mp4' %}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+
+
       <!-- Applications Section -->
       <div class="applications mt-5" id="applications">
         <h3>Applications of MEA Triazine H₂S Scavenger</h3>
@@ -989,6 +995,24 @@
   </style>
 
   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const video = document.getElementById("meaVideo");
+
+      // Create an intersection observer
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            video.play();   // Play when visible
+          } else {
+            video.pause();  // Pause when not visible
+          }
+        });
+      }, {
+        threshold: 0.5  // Play when at least 50% visible
+      });
+
+      observer.observe(video);
+    });
     document.addEventListener("DOMContentLoaded", function () {
       const faqs = document.querySelectorAll(".faq-item h3");
 
