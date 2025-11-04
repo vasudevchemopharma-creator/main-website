@@ -219,6 +219,67 @@
         }
 
         /* Mission Vision Values */
+        /* Sticky Enquiry Button */
+        .sticky-enquiry-btn {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            background: linear-gradient(135deg, #e85a4f, #d62d20);
+            color: white;
+            padding: 18px 35px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(232, 90, 79, 0.4);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .sticky-enquiry-btn:hover {
+            background: linear-gradient(135deg, #d62d20, #b71c1c);
+            transform: translateY(-5px) !important;
+            box-shadow: 0 12px 35px rgba(232, 90, 79, 0.6);
+            color: white;
+        }
+
+        .sticky-enquiry-btn i {
+            font-size: 1.3rem;
+            animation: shake 1s ease-in-out infinite;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(-10deg);
+            }
+
+            75% {
+                transform: rotate(10deg);
+            }
+        }
+
         .mvv-section {
             background: #f7fafc;
         }
@@ -562,6 +623,31 @@
             .stat-number {
                 font-size: 2.5rem;
             }
+
+            /* sticky-enquiry.css */
+            .sticky-enquiry-btn {
+                right: 20px;
+                bottom: 20px;
+                padding: 15px 25px;
+                font-size: 1rem;
+            }
+
+            .sticky-enquiry-btn {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+
+            .sticky-enquiry-btn span {
+                display: none;
+            }
+
+            .sticky-enquiry-btn {
+                width: 60px;
+                height: 60px;
+                padding: 0;
+                justify-content: center;
+                border-radius: 50%;
+            }
         }
     </style>
 </head>
@@ -586,11 +672,19 @@
             <h2 class="section-title">Our Story</h2>
             <div class="overview-content">
                 <div class="overview-text">
-                    <p>Vasudev Chemo Pharma emerged from a vision to revolutionize the chemical manufacturing industry in India. What started as a small-scale operation has grown into one of the country's most trusted chemical manufacturers, serving diverse industries across the globe.</p>
-                    
-                    <p>Our journey began with a simple mission: to provide high-quality chemical solutions that meet the evolving needs of modern industries while maintaining the highest standards of safety and environmental responsibility. Over two decades, we have built a reputation for excellence, innovation, and reliability.</p>
-                    
-                    <p>Today, Vasudev Chemo Pharma stands as a testament to the power of dedication, continuous improvement, and customer-centric approach. We have successfully expanded our operations, enhanced our product portfolio, and established ourselves as a preferred partner for businesses worldwide.</p>
+                    <p>Vasudev Chemo Pharma emerged from a vision to revolutionize the chemical manufacturing industry
+                        in India. What started as a small-scale operation has grown into one of the country's most
+                        trusted chemical manufacturers, serving diverse industries across the globe.</p>
+
+                    <p>Our journey began with a simple mission: to provide high-quality chemical solutions that meet the
+                        evolving needs of modern industries while maintaining the highest standards of safety and
+                        environmental responsibility. Over two decades, we have built a reputation for excellence,
+                        innovation, and reliability.</p>
+
+                    <p>Today, Vasudev Chemo Pharma stands as a testament to the power of dedication, continuous
+                        improvement, and customer-centric approach. We have successfully expanded our operations,
+                        enhanced our product portfolio, and established ourselves as a preferred partner for businesses
+                        worldwide.</p>
                 </div>
                 <div class="overview-image">
                     <div class="image-placeholder">
@@ -624,7 +718,10 @@
             </div>
         </div>
     </section>
-
+    <a href="#contact" class="sticky-enquiry-btn">
+        <i class="bi bi-envelope-fill"></i>
+        <span>Send Enquiry</span>
+    </a>
     <!-- Mission, Vision, Values -->
     <section class="section mvv-section">
         <div class="container">
@@ -635,21 +732,25 @@
                         <i class="bi bi-bullseye"></i>
                     </div>
                     <h3>Our Mission</h3>
-                    <p>To provide innovative, high-quality chemical solutions that enable our clients to achieve their goals while promoting sustainable practices and environmental stewardship in all our operations.</p>
+                    <p>To provide innovative, high-quality chemical solutions that enable our clients to achieve their
+                        goals while promoting sustainable practices and environmental stewardship in all our operations.
+                    </p>
                 </div>
                 <div class="mvv-card">
                     <div class="mvv-icon">
                         <i class="bi bi-eye"></i>
                     </div>
                     <h3>Our Vision</h3>
-                    <p>To be the global leader in chemical manufacturing, recognized for our commitment to excellence, innovation, and sustainability, while creating value for all stakeholders.</p>
+                    <p>To be the global leader in chemical manufacturing, recognized for our commitment to excellence,
+                        innovation, and sustainability, while creating value for all stakeholders.</p>
                 </div>
                 <div class="mvv-card">
                     <div class="mvv-icon">
                         <i class="bi bi-heart"></i>
                     </div>
                     <h3>Our Values</h3>
-                    <p>Integrity, Quality, Innovation, Safety, Environmental Responsibility, Customer Focus, and Continuous Improvement guide everything we do at Vasudev Chemo Pharma.</p>
+                    <p>Integrity, Quality, Innovation, Safety, Environmental Responsibility, Customer Focus, and
+                        Continuous Improvement guide everything we do at Vasudev Chemo Pharma.</p>
                 </div>
             </div>
         </div>
@@ -665,21 +766,24 @@
                     <div class="timeline-content">
                         <div class="timeline-year">2020</div>
                         <h4>Company Founded</h4>
-                        <p>Vasudev Chemo Pharma was established with a vision to provide quality chemical solutions to Indian industries.</p>
+                        <p>Vasudev Chemo Pharma was established with a vision to provide quality chemical solutions to
+                            Indian industries.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-content">
                         <div class="timeline-year">2021</div>
                         <h4>ISO Certification</h4>
-                        <p>Achieved ISO 9001:2008 certification, establishing our commitment to quality management systems.</p>
+                        <p>Achieved ISO 9001:2008 certification, establishing our commitment to quality management
+                            systems.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-content">
                         <div class="timeline-year">2021</div>
                         <h4>International Expansion</h4>
-                        <p>Began exporting to Southeast Asian markets, marking our entry into international business.</p>
+                        <p>Began exporting to Southeast Asian markets, marking our entry into international business.
+                        </p>
                     </div>
                 </div>
                 <div class="timeline-item">
@@ -693,7 +797,8 @@
                     <div class="timeline-content">
                         <div class="timeline-year">2024</div>
                         <h4>Sustainability Initiative</h4>
-                        <p>Launched comprehensive sustainability program focusing on green chemistry and environmental protection.</p>
+                        <p>Launched comprehensive sustainability program focusing on green chemistry and environmental
+                            protection.</p>
                     </div>
                 </div>
             </div>
@@ -707,11 +812,15 @@
             <div class="quality-content">
                 <div class="quality-text">
                     <h3>Commitment to Excellence</h3>
-                    <p>At Vasudev Chemo Pharma, quality is not just a standard—it's our promise. We maintain rigorous quality control processes throughout our manufacturing operations, ensuring every product meets or exceeds international standards.</p>
-                    
-                    <p>Our state-of-the-art laboratories are equipped with advanced analytical instruments, and our team of qualified chemists conducts comprehensive testing at every stage of production.</p>
-                    
-                    <p>We are proud holders of multiple international certifications that validate our commitment to quality, safety, and environmental responsibility.</p>
+                    <p>At Vasudev Chemo Pharma, quality is not just a standard—it's our promise. We maintain rigorous
+                        quality control processes throughout our manufacturing operations, ensuring every product meets
+                        or exceeds international standards.</p>
+
+                    <p>Our state-of-the-art laboratories are equipped with advanced analytical instruments, and our team
+                        of qualified chemists conducts comprehensive testing at every stage of production.</p>
+
+                    <p>We are proud holders of multiple international certifications that validate our commitment to
+                        quality, safety, and environmental responsibility.</p>
                 </div>
                 <div class="certifications-grid">
                     <div class="cert-badge">
@@ -739,7 +848,7 @@
     {% include 'footer.html' %}
 
     <script>
-        
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -775,6 +884,21 @@
             section.classList.add('fade-in');
             observer.observe(section);
         });
+
+        // sticky-enquiry.js
+        const stickyBtn = document.querySelector('.sticky-enquiry-btn');
+        if (stickyBtn) {
+            stickyBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const contactSection = document.querySelector('#contact');
+                if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    // fallback to top if contact section missing
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        }
     </script>
 </body>
 
