@@ -19,7 +19,7 @@ DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = os.getenv(
     "DJANGO_ALLOWED_HOSTS",
     "127.0.0.1,localhost",
-    "15870136-79a7-400e-b9fc-28a6364a171d.cname.koyeb.app"
+    
 ).split(",")
 
 # =====================
