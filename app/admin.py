@@ -1,6 +1,6 @@
 # admin.py
 from django.contrib import admin
-from .models import DownloadEmail
+from .models import DownloadEmail, Contact, Product, ProductCategory
 
 from django.contrib import admin
 from .models import Contact
@@ -61,3 +61,16 @@ class ContactAdmin(admin.ModelAdmin):
         css = {
             'all': ('admin/css/custom_admin.css',)
         }
+
+@admin.register(ProductCategory)
+class ProductCategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug')
+    prepopulated_fields = {'slug': ('name',)}
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('name', 'priority', 'category', 'purity', 'cas_number')
+    list_editable = ('priority',)  # Allow editing priority directly from list view
+    list_filter = ('category', 'grade', 'form')
+    search_fields = ('name', 'short_description', 'cas_number')
+    prepopulated_fields = {'slug': ('name',)}

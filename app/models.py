@@ -57,3 +57,57 @@ class Contact(models.Model):
             if choice[0] == self.product:
                 return choice[1]
         return self.product
+
+
+class ProductCategory(models.Model):
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True)
+    icon = models.CharField(max_length=50, help_text="Bootstrap icon class name")
+
+    class Meta:
+        verbose_name_plural = "Product Categories"
+
+    def __str__(self):
+        return self.name
+
+
+class Product(models.Model):
+    priority = models.IntegerField(default=0, help_text="Higher number = higher priority (will appear first)")
+    name = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True)
+    category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE, related_name='products')
+    short_description = models.TextField()
+    icon_text = models.CharField(max_length=10, help_text="Short text shown in product icon")
+    purity = models.CharField(max_length=50, blank=True)
+    packaging = models.CharField(max_length=100, blank=True)
+    Product_Category = models.CharField(max_length=100, blank=True)
+    application = models.CharField(max_length=100, blank=True)
+    grade = models.CharField(max_length=100, blank=True)
+    form = models.CharField(max_length=100, blank=True)
+    cas_number = models.CharField(max_length=50, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-priority', 'name']
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def specs(self):
+        """Return product specifications as a dictionary"""
+        specs = {}
+        if self.purity:
+            specs['Purity'] = self.purity
+        if self.packaging:
+            specs['Packaging'] = self.packaging
+        if self.application:
+            specs['Application'] = self.application
+        if self.grade:
+            specs['Grade'] = self.grade
+        if self.form:
+            specs['Form'] = self.form
+        if self.cas_number:
+            specs['CAS Number'] = self.cas_number
+        return specs

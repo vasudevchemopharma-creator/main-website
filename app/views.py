@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.utils.decorators import method_decorator
@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 from .forms import ContactForm
-from .models import Contact
+from .models import Contact, Product, ProductCategory
 
 
 
@@ -25,7 +25,14 @@ def ourservices(request):
     return render(request, 'ourservices.html')
 
 def products(request):
-    return render(request, 'products.html')
+    categories = ProductCategory.objects.all()
+    products = Product.objects.select_related('category').all()
+    
+    context = {
+        'categories': categories,
+        'products': products,
+    }
+    return render(request, 'products.html', context)
 
 def triazine(request):
 
@@ -201,3 +208,7 @@ def contact_ajax(request):
             'success': False,
             'message': 'An error occurred. Please try again.'
         }, status=500)
+
+def product_detail(request, slug):
+    product = get_object_or_404(Product, slug=slug)
+    return render(request, 'product_detail.html', {'product': product})
