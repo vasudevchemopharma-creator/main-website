@@ -23,7 +23,11 @@
         align-items: center;
         background: #ffffff;
         padding: 0.8rem 0.8rem;
-        position: relative;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        transition: transform 0.3s ease;
     }
 
     .logo {
@@ -392,6 +396,31 @@
             /* match the hero-slider height */
         }
     }
+
+    /* Add these rules at the start of your existing <style> block */
+    .navbar-container {
+        /* Add these properties to existing .navbar-container */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        transition: transform 0.3s ease;
+    }
+
+    .navbar-hidden {
+        transform: translateY(-100%);
+    }
+
+    /* Add this to your existing <style> block */
+    body {
+        padding-top: 100px; /* Adjust this value based on your navbar height */
+    }
+
+    @media (max-width: 768px) {
+        body {
+            padding-top: 80px; /* Smaller padding for mobile */
+        }
+    }
 </style>
 
 <nav class="navbar-container">
@@ -427,6 +456,37 @@
 <div id="google_translate_element" style="display:none;"></div>
 
 <script>
+    // Add this code at the start of your existing <script> block
+    document.addEventListener('DOMContentLoaded', function() {
+        const navbar = document.querySelector('.navbar-container');
+        let lastScroll = 0;
+        let scrollTimeout;
+
+        window.addEventListener('scroll', function() {
+            clearTimeout(scrollTimeout);
+            
+            const currentScroll = window.pageYOffset;
+            
+            // Scroll down
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                navbar.classList.add('navbar-hidden');
+            } 
+            // Scroll up
+            else if (currentScroll < lastScroll) {
+                navbar.classList.remove('navbar-hidden');
+            }
+            
+            lastScroll = currentScroll;
+
+            // Add a small delay before allowing the navbar to show again
+            scrollTimeout = setTimeout(() => {
+                if (currentScroll <= 100) {
+                    navbar.classList.remove('navbar-hidden');
+                }
+            }, 150);
+        }, { passive: true });
+    });
+
     // Mobile Navigation Toggle
     document.addEventListener('DOMContentLoaded', function () {
         const menuToggle = document.getElementById('menuToggle');
