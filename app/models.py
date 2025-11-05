@@ -77,7 +77,17 @@ class Product(models.Model):
     slug = models.SlugField(unique=True)
     category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE, related_name='products')
     short_description = models.TextField()
-    icon_text = models.CharField(max_length=10, help_text="Short text shown in product icon")
+    image = models.ImageField(
+        upload_to='product_images/',
+        null=True,
+        blank=True,
+        help_text="Recommended size: 354x200 pixels"
+    )
+    icon_text = models.CharField(
+        max_length=10, 
+        help_text="Short text shown if no image is uploaded",
+        blank=True
+    )
     purity = models.CharField(max_length=50, blank=True)
     packaging = models.CharField(max_length=100, blank=True)
     Product_Category = models.CharField(max_length=100, blank=True)

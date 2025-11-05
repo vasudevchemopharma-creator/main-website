@@ -69,8 +69,12 @@ class ProductCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'priority', 'category', 'purity', 'cas_number')
-    list_editable = ('priority',)  # Allow editing priority directly from list view
+    list_display = ('name', 'priority', 'category', 'has_image')
     list_filter = ('category', 'grade', 'form')
     search_fields = ('name', 'short_description', 'cas_number')
     prepopulated_fields = {'slug': ('name',)}
+    
+    def has_image(self, obj):
+        return bool(obj.image)
+    has_image.boolean = True
+    has_image.short_description = 'Has Image'

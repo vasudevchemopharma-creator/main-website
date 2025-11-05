@@ -199,11 +199,15 @@
 
         .product-image {
             height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             position: relative;
             overflow: hidden;
+        }
+
+        .product-img {
+            width: 354px;
+            height: 200px;
+            object-fit: cover;
+            display: block;
         }
 
         .product-icon {
@@ -636,8 +640,12 @@
                 {% for product in products %}
                 <div class="product-card" data-category="{{ product.category.slug }}">
                     <div class="product-image">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img">
+                        {% else %}
                         <div class="product-bg"></div>
                         <div class="product-icon">{{ product.icon_text }}</div>
+                        {% endif %}
                     </div>
                     <div class="product-content">
                         <div class="product-category">{{ product.category.name }}</div>
@@ -652,9 +660,9 @@
                             {% endfor %}
                         </div>
                         <div class="product-actions">
-                             <button class="btn-primary"
+                            <button class="btn-primary"
                                 onclick="window.location.href='{% url 'contact' %}?product={{ product.slug }}'">Request
-                                Quote</button> 
+                                Quote</button>
                             <a href="{% url 'product_detail' slug=product.slug %}" class="btn-secondary">View
                                 Details</a>
                         </div>
@@ -823,6 +831,23 @@
                     filterByCategory('all');
                 }
             });
+        });
+
+        // Add this to your existing script section
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if URL has product parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const product = urlParams.get('product');
+            
+            if (product && window.location.hash === '#contact') {
+                // Scroll to contact section
+                const contactSection = document.querySelector('#contact');
+                if (contactSection) {
+                    setTimeout(() => {
+                        contactSection.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                }
+            }
         });
     </script>
 </body>
