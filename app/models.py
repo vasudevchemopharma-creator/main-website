@@ -80,52 +80,51 @@ class ProductCategory(models.Model):
 
 
 class Product(models.Model):
-    priority = models.IntegerField(default=0, help_text="Higher number = higher priority (will appear first)")
+    priority = models.IntegerField(default=0, help_text="Higher number = higher priority")
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE, related_name='products')
     short_description = models.TextField()
     
-    # --- NEW SPECIFICATION FIELDS ADDED TO RESOLVE SYSTEM CHECK ERRORS ---
-    purity = models.CharField(max_length=150, blank=True, null=True, help_text="Purity percentage or description")
-    packaging = models.CharField(max_length=150, blank=True, null=True, help_text="Packaging details (e.g., 200kg Drum)")
-    application = models.CharField(max_length=255, blank=True, null=True, help_text="Primary applications")
-    grade = models.CharField(max_length=100, blank=True, null=True, help_text="Product grade (e.g., Industrial, Pharma)")
-    form = models.CharField(max_length=100, blank=True, null=True, help_text="Physical form (e.g., Liquid, Powder)")
+    # Specifications
+    purity = models.CharField(max_length=150, blank=True, null=True)
+    packaging = models.CharField(max_length=150, blank=True, null=True)
+    application = models.CharField(max_length=255, blank=True, null=True)
+    grade = models.CharField(max_length=100, blank=True, null=True)
+    form = models.CharField(max_length=100, blank=True, null=True)
     cas_number = models.CharField(max_length=20, blank=True, null=True, verbose_name="CAS Number")
-    # ---------------------------------------------------------------------
 
+    # Image URL (Google Drive direct link)
     image_url = models.URLField(
         max_length=500,
         blank=True,
         null=True,
-        help_text="Google Drive image URL"
+        help_text="Google Drive direct image URL (use format: https://drive.google.com/uc?export=view&id=FILE_ID)"
     )
+    
+    # Files stored on Google Drive (if using gdstorage)
     video = models.FileField(
         upload_to='product_videos/',
-        storage=get_file_storage,
+        storage=settings.FILE_STORAGE_FUNCTION,  # ✅ Use callable from settings
         null=True,
         blank=True,
         help_text="Product demonstration video"
     )
     coa_pdf = models.FileField(
         upload_to='product_coa/',
-        storage=get_file_storage,
+        storage=settings.FILE_STORAGE_FUNCTION,  # ✅ Use callable from settings
         null=True,
         blank=True,
         help_text="Certificate of Analysis (PDF)"
     )
     tds_pdf = models.FileField(
         upload_to='product_tds/',
-        storage=get_file_storage,
+        storage=settings.FILE_STORAGE_FUNCTION,  # ✅ Use callable from settings
         null=True,
         blank=True,
         help_text="Technical Data Sheet (PDF)"
     )
-
-    def has_downloads(self):
-        """Check if product has downloadable files"""
-        return bool(self.coa_pdf or self.tds_pdf)
+    
 
     class Meta:
         ordering = ['-priority', 'name']
@@ -133,11 +132,14 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    def has_downloads(self):
+        """Check if product has downloadable files"""
+        return bool(self.coa_pdf or self.tds_pdf)
+
     @property
     def specs(self):
         """Return product specifications as a dictionary"""
         specs = {}
-        # This property now correctly references fields defined above
         if self.purity:
             specs['Purity'] = self.purity
         if self.packaging:
