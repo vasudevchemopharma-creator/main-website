@@ -11,6 +11,8 @@ from django.core.mail import send_mail
 from django.conf import settings
 from .forms import ContactForm
 from .models import Contact, Product, ProductCategory
+from django.shortcuts import render, get_object_or_404
+from .models import Product
 
 
 
@@ -212,4 +214,11 @@ def contact_ajax(request):
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug)
     return render(request, 'product_detail.html', {'product': product})
+
+
+
+def product_detail(request, slug):
+    product = get_object_or_404(Product, slug=slug)
+    return render(request, 'products/product_detail.html', {'product': product})
+
 
