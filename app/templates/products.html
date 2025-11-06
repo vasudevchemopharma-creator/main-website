@@ -646,13 +646,13 @@
                 {% for product in products %}
                 <div class="product-card" data-category="{{ product.category.slug }}">
                     <div class="product-image">
-                        {% if product.image %}
-                        <img src="{{ product.image.url }}"
-                            alt="{{ product.name }}"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="product-icon">{{ product.name|slice:":2"|upper }}</div>
+                        {% if product.image_url %}
+                        <img src="{{ product.get_direct_image_url }}"
+                             alt="{{ product.name }}"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon">{{ product.name|slice:":3"|upper }}</div>
                         {% else %}
-                        <div class="product-icon" style="display: flex;">{{ product.name|slice:":2"|upper }}</div>
+                        <div class="product-icon" style="display: flex;">{{ product.name|slice:":3"|upper }}</div>
                         {% endif %}
                     </div>
                     <div class="product-content">

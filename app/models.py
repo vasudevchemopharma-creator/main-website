@@ -80,6 +80,8 @@ class ProductCategory(models.Model):
 
 
 class Product(models.Model):
+
+    
     priority = models.IntegerField(default=0, help_text="Higher number = higher priority")
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
@@ -153,3 +155,17 @@ class Product(models.Model):
         if self.cas_number:
             specs['CAS Number'] = self.cas_number
         return specs
+    def get_direct_image_url(self):
+        """Convert Google Drive URL to embeddable format"""
+        if not self.image_url:
+            return None
+        
+        import re
+        
+        file_id = None
+        
+        # Format 1: /file/d/FILE_ID/view
+        match = re.search(r'/file/d/([a-zA-Z0-9_-]+)', self.image_url)
+        if match:
+            file_id = match.group(1)
+        return self.image_url
