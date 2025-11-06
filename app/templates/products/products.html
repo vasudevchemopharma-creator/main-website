@@ -668,6 +668,8 @@
                                 Quote</button>
                             <a href="{% url 'product_detail' slug=product.slug %}" class="btn-secondary">View
                                 Details</a>
+                            <a href="{% url 'p' slug=product.slug %}" class="btn-secondary">View
+                                Details</a>
                         </div>
                     </div>
                 </div>
@@ -837,11 +839,11 @@
         });
 
         // Add this to your existing script section
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Check if URL has product parameter
             const urlParams = new URLSearchParams(window.location.search);
             const product = urlParams.get('product');
-            
+
             if (product && window.location.hash === '#contact') {
                 // Scroll to contact section
                 const contactSection = document.querySelector('#contact');
