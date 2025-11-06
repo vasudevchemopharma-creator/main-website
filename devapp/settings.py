@@ -1,11 +1,14 @@
-"""
-Django settings for devapp project.
-"""
-
 from pathlib import Path
 import os
-
 from dotenv import load_dotenv
+from django.core.files.storage import FileSystemStorage
+# Import GoogleDriveStorage for use inside the conditional function
+try:
+    from gdstorage.storage import GoogleDriveStorage
+except ImportError:
+    # Allows settings to load even if gdstorage is not installed (e.g., lightweight dev environment)
+    GoogleDriveStorage = None
+
 load_dotenv() 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
+    'gdstorage',
 ]
 
 MIDDLEWARE = [
@@ -62,6 +66,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # The incorrect line 'django.template.context_processors.messages' 
+                # has been removed to fix the ImportError.
             ],
         },
     },
@@ -99,7 +105,9 @@ STATICFILES_DIRS = [BASE_DIR / 'static']  # local dev assets
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# Use Path object for consistency
+MEDIA_ROOT = BASE_DIR / 'media' 
+
 
 # =====================
 # Email
@@ -128,7 +136,8 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
-USE_L10N = True
+# USE_L10N is deprecated in Django 4.0+. Using USE_TZ=True usually supersedes L10N for dates/times.
+# USE_L10N = True 
 USE_TZ = True
 
 DATE_FORMAT = 'd/m/Y'
@@ -143,3 +152,45 @@ DATETIME_INPUT_FORMATS = [
 # Default primary key field type
 # =====================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# =====================
+# CONDITIONAL FILE STORAGE
+# =====================
+
+# Global settings used by gdstorage, defined here but only populated inside the function
+GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = None
+GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE_CONTENTS = None
+GOOGLE_DRIVE_STORAGE_MEDIA_ROOT = 'vasudev_products' 
+
+
+def get_file_storage_instance():
+    """
+    Dynamically initializes and returns the correct storage backend.
+    
+    This function is used in models.py (storage=get_file_storage_instance) 
+    to defer storage initialization until runtime, preventing a crash when 
+    running manage.py commands locally without the key.
+    """
+    
+    # Check for PRODUCTION mode (not DEBUG) and if the required key is available
+    if not DEBUG and os.environ.get('GOOGLE_DRIVE_KEY_JSON'):
+        # PRODUCTION (Koyeb) - Use Google Drive Storage
+        if GoogleDriveStorage:
+             # The storage package uses GOOGLE_DRIVE_STORAGE_... settings automatically
+            global GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE_CONTENTS
+            GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE_CONTENTS = os.environ.get('GOOGLE_DRIVE_KEY_JSON')
+            
+            print("Using Google Drive Storage...")
+            return GoogleDriveStorage()
+        else:
+            # Should not happen if gdstorage is in INSTALLED_APPS
+            print("WARNING: gdstorage not imported. Falling back to local FS.")
+            return FileSystemStorage(location=MEDIA_ROOT)
+    else:
+        # DEVELOPMENT (Local) - Use Local File System Storage
+        print("Using Local File System Storage...")
+        return FileSystemStorage(location=MEDIA_ROOT)
+
+# This variable is referenced by models.py using 'settings.FILE_STORAGE_FUNCTION'
+FILE_STORAGE_FUNCTION = get_file_storage_instance

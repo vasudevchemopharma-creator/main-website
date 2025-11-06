@@ -643,8 +643,10 @@
                 {% for product in products %}
                 <div class="product-card" data-category="{{ product.category.slug }}">
                     <div class="product-image">
-                        {% if product.image %}
-                        <img src="{{ product.image.urls }}" class="product-img">
+                        {% if product.image_url %}
+                        <img src="{{ product.image_url }}" class="product-img">
+                        {% elif product.image %}
+                        <img src="{{ product.image.url }}" class="product-img">
                         {% else %}
                         <div class="product-bg"></div>
                         <div class="product-icon">{{ product.icon_text }}</div>

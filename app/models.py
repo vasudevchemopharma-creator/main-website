@@ -1,13 +1,24 @@
-# models.py
 from django.db import models
 from django.utils import timezone
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage # Only needed for type hinting/default
+
+
+# --- NEW HELPER FUNCTION ---
+# This function is defined in settings.py and imported here via settings
+def get_file_storage():
+    """
+    Returns the appropriate storage class instance based on settings.
+    """
+    return settings.FILE_STORAGE_FUNCTION() 
+# ----------------------------
 
 
 class DownloadEmail(models.Model):
     email = models.EmailField(max_length=254)
     document_name = models.CharField(max_length=255, blank=True, null=True)
     user_agent = models.TextField(blank=True, null=True)
-    downloaded_at = models.DateTimeField(auto_now_add=True)  # This will use current timezone
+    downloaded_at = models.DateTimeField(auto_now_add=True)
     
     class Meta:
         db_table = 'download_emails'
@@ -17,9 +28,6 @@ class DownloadEmail(models.Model):
         return f"{self.email} - {self.document_name} - {self.downloaded_at}"
     
     def save(self, *args, **kwargs):
-        # Ensure we're using the current local timezone
-        if not self.downloaded_at:
-            self.downloaded_at = timezone.now()
         super().save(*args, **kwargs)
 
 
@@ -77,26 +85,47 @@ class Product(models.Model):
     slug = models.SlugField(unique=True)
     category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE, related_name='products')
     short_description = models.TextField()
-    image = models.ImageField(
-        upload_to='product_images/',
+    
+    # --- NEW SPECIFICATION FIELDS ADDED TO RESOLVE SYSTEM CHECK ERRORS ---
+    purity = models.CharField(max_length=150, blank=True, null=True, help_text="Purity percentage or description")
+    packaging = models.CharField(max_length=150, blank=True, null=True, help_text="Packaging details (e.g., 200kg Drum)")
+    application = models.CharField(max_length=255, blank=True, null=True, help_text="Primary applications")
+    grade = models.CharField(max_length=100, blank=True, null=True, help_text="Product grade (e.g., Industrial, Pharma)")
+    form = models.CharField(max_length=100, blank=True, null=True, help_text="Physical form (e.g., Liquid, Powder)")
+    cas_number = models.CharField(max_length=20, blank=True, null=True, verbose_name="CAS Number")
+    # ---------------------------------------------------------------------
+
+    image_url = models.URLField(
+        max_length=500,
+        blank=True,
+        null=True,
+        help_text="Google Drive image URL"
+    )
+    video = models.FileField(
+        upload_to='product_videos/',
+        storage=get_file_storage,
         null=True,
         blank=True,
-        help_text="Recommended size: 354x200 pixels"
+        help_text="Product demonstration video"
     )
-    icon_text = models.CharField(
-        max_length=10, 
-        help_text="Short text shown if no image is uploaded",
-        blank=True
+    coa_pdf = models.FileField(
+        upload_to='product_coa/',
+        storage=get_file_storage,
+        null=True,
+        blank=True,
+        help_text="Certificate of Analysis (PDF)"
     )
-    purity = models.CharField(max_length=50, blank=True)
-    packaging = models.CharField(max_length=100, blank=True)
-    Product_Category = models.CharField(max_length=100, blank=True)
-    application = models.CharField(max_length=100, blank=True)
-    grade = models.CharField(max_length=100, blank=True)
-    form = models.CharField(max_length=100, blank=True)
-    cas_number = models.CharField(max_length=50, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    tds_pdf = models.FileField(
+        upload_to='product_tds/',
+        storage=get_file_storage,
+        null=True,
+        blank=True,
+        help_text="Technical Data Sheet (PDF)"
+    )
+
+    def has_downloads(self):
+        """Check if product has downloadable files"""
+        return bool(self.coa_pdf or self.tds_pdf)
 
     class Meta:
         ordering = ['-priority', 'name']
@@ -108,6 +137,7 @@ class Product(models.Model):
     def specs(self):
         """Return product specifications as a dictionary"""
         specs = {}
+        # This property now correctly references fields defined above
         if self.purity:
             specs['Purity'] = self.purity
         if self.packaging:

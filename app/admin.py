@@ -77,4 +77,11 @@ class ProductAdmin(admin.ModelAdmin):
     def has_image(self, obj):
         return bool(obj.image)
     has_image.boolean = True
-    has_image.short_description = 'Has Image'
+    
+    def has_video(self, obj):
+        return bool(obj.video)
+    has_video.boolean = True
+    
+    def has_downloads(self, obj):
+        return obj.has_downloads()
+    has_downloads.boolean = True
