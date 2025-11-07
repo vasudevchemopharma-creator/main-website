@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MEA Triazine 80% | MEA Triazine Manufacturer & Supplier in India | Vasudev Chemo Pharma</title>
+  <title>{{ product.name }} Manufacturer & Supplier in India | Vasudev Chemo Pharma</title>
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="{% static 'media/logo.jpg' %}">
@@ -450,7 +450,15 @@
       <p class="available-grades">Also available in: 40%, 50%, and 60% grades</p>
     </div>
   </section>
-
+  <div class="container mt-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/products">Products</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+      </ol>
+    </nav>
+  </div>
   <!-- Product Details -->
   <section class="product-detail" id="product-detail">
     <div class="container">
@@ -458,21 +466,19 @@
         <!-- Product Image -->
         <div class="col-md-5">
           <div class="image-box">
-            <img src="{% static 'media/MEA-Triazine.jpg' %}" alt="MEA Triazine 80% H2S scavenger product image"
-              loading="lazy">
+            {% if product.image_url %}
+            <img src="{{ product.image_url }}" alt="{{ product.name }}" class="product-image img-fluid">
+            {% else %}
+            <img src="/static/images/placeholder.png" alt="{{ product.name }}" class="product-image img-fluid">
+            {% endif %}
           </div>
         </div>
 
         <!-- Product Info -->
         <div class="col-md-7">
-          <h2>MEA Triazine 80% – Hydrogen Sulfide Removal Solution</h2>
+          <h2>{{ product.name }}</h2>
           <p>
-            <strong>Vasudev Chemo Pharma</strong> is a leading <strong>MEA Triazine manufacturer and exporter in
-              India</strong>, offering
-            high-performance <strong>H₂S scavenger chemicals</strong> used for <strong>hydrogen sulfide removal</strong>
-            in oil, gas, and refinery operations.
-            Our <strong>MEA Triazine 80%</strong> delivers reliable performance in both <strong>onshore and offshore
-              crude oil sweetening</strong> processes.
+            {{ product.short_description }}
           </p>
 
           <ul>
@@ -483,47 +489,22 @@
           </ul>
 
           <!-- Specification Table -->
+          {% if product.specs %}
           <div class="spec-table" id="specifications">
             <table>
               <tr>
                 <th>Parameter</th>
                 <th>Specification</th>
               </tr>
+              {% for key, value in product.specs.items %}
               <tr>
-                <td>Chemical Name</td>
-                <td>Hexahydro-1,3,5-tris(hydroxyethyl)-s-triazine</td>
+                <td>{{ key }}</td>
+                <td>{{ value }}</td>
               </tr>
-              <tr>
-                <td>Purity</td>
-                <td>80%</td>
-              </tr>
-              <tr>
-                <td>Appearance</td>
-                <td>Clear to pale yellow liquid</td>
-              </tr>
-              <tr>
-                <td>Application</td>
-                <td>H₂S Scavenger for Oil & Gas Industry</td>
-              </tr>
-              <tr>
-                <td>Packaging</td>
-                <td>200L HDPE Drums / IBC Tank</td>
-              </tr>
-              <tr>
-                <td>Origin</td>
-                <td>Manufactured in India</td>
-              </tr>
+              {% endfor %}
             </table>
           </div>
-
-          <!-- Action Buttons -->
-          <div class="action-buttons">
-            <a href="/#contact" class="btn-secondary">Request For Quotation</a>
-            <button class="btn-secondary download-btn" data-file="{% static 'media/VCP-003-TDS.pdf' %}">Download
-              TDS</button>
-            <button class="btn-secondary download-btn" data-file="{% static 'media/VCP-001-COA.pdf' %}">Download
-              COA</button>
-          </div>
+          {% endif %}
         </div>
       </div>
 
@@ -784,12 +765,12 @@
         </table>
       </div>
       {% for pro in prod %}
-        <video id="meaVideo" controls loop style="width: 100%; max-width: 800px; display: block; margin: 0 auto;"
+      <video id="meaVideo" controls loop style="width: 100%; max-width: 800px; display: block; margin: 0 auto;"
         class="mt-5">
-        <source src="{{ prod.image_url }}" type="video/mp4">
-        Your browser does not support the video tag.
-        </video>
+        <source src="{{ pro.image_url }}" type="video/mp4">
+      </video>
       {% endfor %}
+
 
 
       <!-- Applications Section -->

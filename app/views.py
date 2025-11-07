@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 from .forms import ContactForm
-from .models import Contact, Product, ProductCategory
+from .models import Contact, Product, ProductCategory,ProductApplication
 from django.shortcuts import render, get_object_or_404
 from .models import Product
 
@@ -47,12 +47,10 @@ def triazine(request):
             image_link = pro.image_url
         else:
             image_link = '/static/img/default_product_image.png' 
-        breakpoint
         context = {
             'product': pro,
             'triazine_image_url': image_link, 
         }
-        breakpoint
     except Product.DoesNotExist:
         context = {
             'error_message': 'Product not found.',
@@ -233,10 +231,13 @@ def contact_ajax(request):
 
 
 def product_detail(request, slug):
-    """Display detailed product information"""
+    """Display detailed product information, including its applications."""
+    
     product = get_object_or_404(Product, slug=slug)
     
-    # Get related products from same category (optional)
+    product_applications = product.applications.all() 
+    product_faqs = product.faqs.all()
+    
     related_products = Product.objects.filter(
         category=product.category
     ).exclude(id=product.id)[:3]
@@ -244,5 +245,7 @@ def product_detail(request, slug):
     context = {
         'product': product,
         'related_products': related_products,
+        'applications' : product_applications,
+        'faqs': product_faqs, 
     }
     return render(request, 'products/product_detail.html', context)
