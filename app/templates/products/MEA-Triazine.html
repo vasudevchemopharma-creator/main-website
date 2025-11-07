@@ -783,11 +783,13 @@
           </tr>
         </table>
       </div>
-
-      <video id="meaVideo" controls loop style="width: 100%; max-width: 800px; display: block; margin: 0 auto;" class="mt-5">
-        <source src="{% static 'media/MEATriazineVideo.mp4' %}" type="video/mp4">
+      {% for pro in prod %}
+        <video id="meaVideo" controls loop style="width: 100%; max-width: 800px; display: block; margin: 0 auto;"
+        class="mt-5">
+        <source src="{{ prod.image_url }}" type="video/mp4">
         Your browser does not support the video tag.
-      </video>
+        </video>
+      {% endfor %}
 
 
       <!-- Applications Section -->

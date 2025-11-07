@@ -36,9 +36,29 @@ def products(request):
     }
     return render(request, 'products.html', context)
 
-def triazine(request):
+from django.shortcuts import render
+from app.models import Product # Make sure this import is correct
 
-    return render(request, 'MEA-Triazine.html')
+def triazine(request):
+    try:
+        pro = Product.objects.get(name='MEA TRIAZINE 78%')
+        
+        if pro.image_url:
+            image_link = pro.image_url
+        else:
+            image_link = '/static/img/default_product_image.png' 
+        breakpoint
+        context = {
+            'product': pro,
+            'triazine_image_url': image_link, 
+        }
+        breakpoint
+    except Product.DoesNotExist:
+        context = {
+            'error_message': 'Product not found.',
+            'triazine_image_url': '/static/img/product_not_found.png',
+        }
+    return render(request, 'products/MEA-Triazine.html', context)
 
 @csrf_exempt
 @require_http_methods(["POST"])
@@ -211,14 +231,18 @@ def contact_ajax(request):
             'message': 'An error occurred. Please try again.'
         }, status=500)
 
-def product_detail(request, slug):
-    product = get_object_or_404(Product, slug=slug)
-    return render(request, 'product_detail.html', {'product': product})
-
-
 
 def product_detail(request, slug):
+    """Display detailed product information"""
     product = get_object_or_404(Product, slug=slug)
-    return render(request, 'products/product_detail.html', {'product': product})
-
-
+    
+    # Get related products from same category (optional)
+    related_products = Product.objects.filter(
+        category=product.category
+    ).exclude(id=product.id)[:3]
+    
+    context = {
+        'product': product,
+        'related_products': related_products,
+    }
+    return render(request, 'products/product_detail.html', context)
