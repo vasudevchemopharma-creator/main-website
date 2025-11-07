@@ -22,10 +22,10 @@ urlpatterns = [
     path('aboutus', views.about, name='aboutus'),
     path('ourservices', views.ourservices, name='ourservices'),
     path('products', views.products, name='products'),
-    path('MEA-Triazine', views.triazine, name='MEA-Triazine'),
     path('save-email/', views.save_email_for_download, name='save_email'),
     path('contact/', views.handle_contact_form, name='contact'),
     path('contact/ajax/', views.contact_ajax, name='contact_ajax'),
+    path('product/<slug:slug>/', views.product_detail, name='product_detail'),
     path('product/<slug:slug>/', views.product_detail, name='product_detail'),
 ]
 
