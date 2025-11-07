@@ -210,3 +210,65 @@ class ProductApplication(models.Model):
 
     def __str__(self):
         return f"{self.product.name} - {self.title}"
+
+
+# -------------------------------------------------------------------
+# Company Informations , FAQs, Blogs Etc.
+# -------------------------------------------------------------------
+
+class CompanyInformation(models.Model):
+    company_name = models.CharField(max_length=200)
+    address = models.TextField()
+    sales_phone = models.CharField(max_length=50)
+    sales_email = models.EmailField()
+    phone = models.CharField(max_length=50)
+    email = models.EmailField()
+    whatsapp_number = models.URLField(max_length=50, blank=True, null=True)
+    facebook_url = models.URLField(blank=True, null=True)
+    linkedin_url = models.URLField(blank=True, null=True)
+    instagram_url = models.URLField(blank=True, null=True)
+    base_url = models.URLField(blank=True, null=True)
+    
+
+    class Meta:
+        verbose_name = "Company Information"
+        verbose_name_plural = "Company Information"
+
+    def __str__(self):
+        return self.company_name
+    
+class CompanyFAQ(models.Model):
+    CompanyInformation = models.ForeignKey(CompanyInformation, on_delete=models.CASCADE, related_name='faqs')
+    question = models.CharField(max_length=300)
+    answer = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.CompanyInformation.company_name} - {self.question[:40]}"
+    
+class CompanyBlog(models.Model):
+    CompanyBlog = models.ForeignKey(CompanyInformation, on_delete=models.CASCADE, related_name='Blogs')
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True)
+    content = models.TextField()
+    published_at = models.DateTimeField(default=timezone.now)
+    author = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ['-published_at']
+
+    def __str__(self):
+        return self.title
+    
+class ProductBlog(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='Blogs')
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True)
+    content = models.TextField()
+    published_at = models.DateTimeField(default=timezone.now)
+    author = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ['-published_at']
+
+    def __str__(self):
+        return self.title

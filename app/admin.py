@@ -5,7 +5,11 @@ from .models import (
     ProductCategory,
     Product,
     ProductFAQ,
-    ProductApplication
+    ProductApplication,
+    CompanyInformation, 
+    CompanyFAQ,
+    CompanyBlog,
+    ProductBlog
 )
 
 
@@ -114,3 +118,56 @@ class ProductFAQAdmin(admin.ModelAdmin):
 class ProductApplicationAdmin(admin.ModelAdmin):
     list_display = ('product', 'title')
     search_fields = ('product__name', 'title')
+
+
+
+
+
+# Inline admin for FAQs (so you can add them directly from the company page)
+class CompanyFAQInline(admin.TabularInline):
+    model = CompanyFAQ
+    extra = 1  # number of empty rows to display
+    fields = ('question', 'answer')
+
+
+@admin.register(CompanyInformation)
+class CompanyInformationAdmin(admin.ModelAdmin):
+    list_display = ('company_name', 'sales_phone', 'sales_email', 'phone', 'email')
+    search_fields = ('company_name', 'sales_email', 'phone')
+    inlines = [CompanyFAQInline]
+
+
+@admin.register(CompanyFAQ)
+class CompanyFAQAdmin(admin.ModelAdmin):
+    list_display = ('question', 'get_company_name')
+    search_fields = ('question', 'answer')
+
+    def get_company_name(self, obj):
+        return obj.CompanyInformation.company_name
+    get_company_name.short_description = 'Company'
+
+
+@admin.register(CompanyBlog)
+class CompanyBlogAdmin(admin.ModelAdmin):
+    list_display = ('title', 'author', 'company_name', 'published_at')
+    search_fields = ('title', 'content', 'author')
+    prepopulated_fields = {'slug': ('title',)}
+    list_filter = ('published_at',)
+    ordering = ('-published_at',)
+
+    def company_name(self, obj):
+        return obj.CompanyBlog.company_name
+    company_name.short_description = "Company"
+
+
+@admin.register(ProductBlog)
+class ProductBlogAdmin(admin.ModelAdmin):
+    list_display = ('title', 'author', 'product_name', 'published_at')
+    search_fields = ('title', 'content', 'author')
+    prepopulated_fields = {'slug': ('title',)}
+    list_filter = ('published_at',)
+    ordering = ('-published_at',)
+
+    def product_name(self, obj):
+        return obj.product.name
+    product_name.short_description = "Product"
