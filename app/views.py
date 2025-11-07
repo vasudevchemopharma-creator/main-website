@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 from .forms import ContactForm
-from .models import Contact, Product, ProductCategory,ProductApplication
+from .models import Contact, Product, ProductCategory,CompanyInformation,CompanyFAQ,ProductBlog
 from django.shortcuts import render, get_object_or_404
 from .models import Product
 
@@ -97,6 +97,8 @@ def save_email_for_download(request):
 
 def index(request):
     """Main index view that handles both GET and POST requests"""
+    Faqs = CompanyFAQ.objects.all()
+    Com_info = CompanyInformation.objects.first()
     if request.method == 'POST':
         return handle_contact_form(request)
     
@@ -104,6 +106,8 @@ def index(request):
     form = ContactForm()
     context = {
         'form': form,
+        'faqs': Faqs,
+        'company_info': Com_info,
     }
     return render(request, 'index.html', context)
 
@@ -230,9 +234,7 @@ def contact_ajax(request):
         }, status=500)
 
 
-def product_detail(request, slug):
-    """Display detailed product information, including its applications."""
-    
+def product_detail(request, slug):    
     product = get_object_or_404(Product, slug=slug)
     
     product_applications = product.applications.all() 
