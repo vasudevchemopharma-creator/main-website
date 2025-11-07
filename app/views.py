@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 from .forms import ContactForm
-from .models import Contact, Product, ProductCategory
+from .models import Contact, Product, ProductCategory,ProductApplication
 from django.shortcuts import render, get_object_or_404
 from .models import Product
 
@@ -36,9 +36,27 @@ def products(request):
     }
     return render(request, 'products.html', context)
 
-def triazine(request):
+from django.shortcuts import render
+from app.models import Product # Make sure this import is correct
 
-    return render(request, 'MEA-Triazine.html')
+def triazine(request):
+    try:
+        pro = Product.objects.get(name='MEA TRIAZINE 78%')
+        
+        if pro.image_url:
+            image_link = pro.image_url
+        else:
+            image_link = '/static/img/default_product_image.png' 
+        context = {
+            'product': pro,
+            'triazine_image_url': image_link, 
+        }
+    except Product.DoesNotExist:
+        context = {
+            'error_message': 'Product not found.',
+            'triazine_image_url': '/static/img/product_not_found.png',
+        }
+    return render(request, 'products/MEA-Triazine.html', context)
 
 @csrf_exempt
 @require_http_methods(["POST"])
@@ -211,14 +229,23 @@ def contact_ajax(request):
             'message': 'An error occurred. Please try again.'
         }, status=500)
 
-def product_detail(request, slug):
-    product = get_object_or_404(Product, slug=slug)
-    return render(request, 'product_detail.html', {'product': product})
-
-
 
 def product_detail(request, slug):
+    """Display detailed product information, including its applications."""
+    
     product = get_object_or_404(Product, slug=slug)
-    return render(request, 'products/product_detail.html', {'product': product})
-
-
+    
+    product_applications = product.applications.all() 
+    product_faqs = product.faqs.all()
+    
+    related_products = Product.objects.filter(
+        category=product.category
+    ).exclude(id=product.id)[:3]
+    
+    context = {
+        'product': product,
+        'related_products': related_products,
+        'applications' : product_applications,
+        'faqs': product_faqs, 
+    }
+    return render(request, 'products/product_detail.html', context)
