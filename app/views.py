@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.utils.decorators import method_decorator
@@ -10,21 +10,21 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 from .forms import ContactForm
-from .models import Contact, Product, ProductCategory
-from django.shortcuts import render, get_object_or_404
-from .models import Product
-
-
+from .models import (
+    Contact, Product, ProductCategory, CompanyInformation, 
+    CompanyFAQ, ProductBlog, CompanyBlog
+)
 
 logger = logging.getLogger(__name__)
-
 
 
 def about(request):
     return render(request, 'aboutus.html')
 
+
 def ourservices(request):
     return render(request, 'ourservices.html')
+
 
 def products(request):
     categories = ProductCategory.objects.all()
@@ -36,9 +36,26 @@ def products(request):
     }
     return render(request, 'products.html', context)
 
-def triazine(request):
 
-    return render(request, 'MEA-Triazine.html')
+def triazine(request):
+    try:
+        pro = Product.objects.get(name='MEA TRIAZINE 78%')
+        
+        if pro.image_url:
+            image_link = pro.image_url
+        else:
+            image_link = '/static/img/default_product_image.png' 
+        context = {
+            'product': pro,
+            'triazine_image_url': image_link, 
+        }
+    except Product.DoesNotExist:
+        context = {
+            'error_message': 'Product not found.',
+            'triazine_image_url': '/static/img/product_not_found.png',
+        }
+    return render(request, 'products/MEA-Triazine.html', context)
+
 
 @csrf_exempt
 @require_http_methods(["POST"])
@@ -54,10 +71,8 @@ def save_email_for_download(request):
                 'error': 'Email is required'
             }, status=400)
         
-        # Extract document name from file URL
         document_name = file_url.split('/')[-1] if file_url else 'Unknown'
         
-        # Save to database
         DownloadEmail.objects.create(
             email=email,
             document_name=document_name,
@@ -76,23 +91,30 @@ def save_email_for_download(request):
         }, status=500)
 
 
-
 def index(request):
     """Main index view that handles both GET and POST requests"""
+    Faqs = CompanyFAQ.objects.all()
+    Com_info = CompanyInformation.objects.first()
+    
+    # Get recent blogs for homepage
+    recent_company_blogs = CompanyBlog.objects.all()[:3]
+    
     if request.method == 'POST':
         return handle_contact_form(request)
     
-    # For GET requests, just render the page with empty form
     form = ContactForm()
     context = {
         'form': form,
+        'faqs': Faqs,
+        'company_info': Com_info,
+        'recent_blogs': recent_company_blogs,
     }
     return render(request, 'index.html', context)
+
 
 def handle_contact_form(request):
     """Handle contact form submission"""
     if request.method == 'POST':
-        # Check if it's an AJAX request
         if request.headers.get('Content-Type') == 'application/json':
             try:
                 data = json.loads(request.body)
@@ -106,17 +128,13 @@ def handle_contact_form(request):
             form = ContactForm(request.POST)
         
         if form.is_valid():
-            # Save the contact message to database
             contact = form.save()
             
-            # Send email notification (optional)
             try:
                 send_contact_email(contact)
             except Exception as e:
-                # Log the error but don't fail the form submission
                 print(f"Email sending failed: {e}")
             
-            # Return appropriate response
             if request.headers.get('Content-Type') == 'application/json':
                 return JsonResponse({
                     'success': True,
@@ -127,7 +145,6 @@ def handle_contact_form(request):
                 return redirect('index')
         
         else:
-            # Form has errors
             if request.headers.get('Content-Type') == 'application/json':
                 return JsonResponse({
                     'success': False,
@@ -137,11 +154,11 @@ def handle_contact_form(request):
             else:
                 messages.error(request, 'Please correct the errors below.')
     
-    # For non-POST requests or form errors, render the page
     context = {
         'form': form if 'form' in locals() else ContactForm(),
     }
     return render(request, 'index.html', context)
+
 
 def send_contact_email(contact):
     """Send email notification when new contact form is submitted"""
@@ -163,7 +180,7 @@ def send_contact_email(contact):
     """
     
     from_email = settings.DEFAULT_FROM_EMAIL
-    recipient_list = ['info@vasudevchemopharma.com']  # Replace with your email
+    recipient_list = ['info@vasudevchemopharma.com']
     
     send_mail(
         subject=subject,
@@ -172,6 +189,7 @@ def send_contact_email(contact):
         recipient_list=recipient_list,
         fail_silently=False,
     )
+
 
 @require_http_methods(["POST"])
 def contact_ajax(request):
@@ -183,7 +201,6 @@ def contact_ajax(request):
         if form.is_valid():
             contact = form.save()
             
-            # Send email notification
             try:
                 send_contact_email(contact)
             except Exception as e:
@@ -211,14 +228,71 @@ def contact_ajax(request):
             'message': 'An error occurred. Please try again.'
         }, status=500)
 
-def product_detail(request, slug):
+
+def product_detail(request, slug):    
     product = get_object_or_404(Product, slug=slug)
-    return render(request, 'product_detail.html', {'product': product})
+    
+    product_applications = product.applications.all() 
+    product_faqs = product.faqs.all()
+    
+    # Get blogs related to this product
+    product_blogs = product.Blogs.all()
+    
+    related_products = Product.objects.filter(
+        category=product.category
+    ).exclude(id=product.id)[:3]
+    
+    context = {
+        'product': product,
+        'related_products': related_products,
+        'applications': product_applications,
+        'faqs': product_faqs,
+        'product_blogs': product_blogs,
+    }
+    return render(request, 'products/product_detail.html', context)
 
 
+# New Blog Views
+def blog_list(request):
+    """Display all company blogs"""
+    company_info = CompanyInformation.objects.first()
+    blogs = CompanyBlog.objects.all()
+    
+    context = {
+        'blogs': blogs,
+        'company_info': company_info,
+    }
+    return render(request, 'blog_list.html', context)
 
-def product_detail(request, slug):
-    product = get_object_or_404(Product, slug=slug)
-    return render(request, 'products/product_detail.html', {'product': product})
+
+def blog_detail(request, slug):
+    """Display individual blog post"""
+    company_info = CompanyInformation.objects.first()
+    blog = get_object_or_404(CompanyBlog, slug=slug)
+    
+    # Get related blogs
+    related_blogs = CompanyBlog.objects.exclude(id=blog.id)[:3]
+    
+    context = {
+        'blog': blog,
+        'related_blogs': related_blogs,
+        'company_info': company_info,
+    }
+    return render(request, 'blog_detail.html', context)
 
 
+def product_blog_detail(request, slug):
+    """Display individual product blog post"""
+    blog = get_object_or_404(ProductBlog, slug=slug)
+    
+    # Get related product blogs
+    related_blogs = ProductBlog.objects.filter(
+        product=blog.product
+    ).exclude(id=blog.id)[:3]
+    
+    context = {
+        'blog': blog,
+        'product': blog.product,
+        'related_blogs': related_blogs,
+    }
+    return render(request, 'product_blog_detail.html', context)

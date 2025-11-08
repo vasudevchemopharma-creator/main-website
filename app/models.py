@@ -1,36 +1,36 @@
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
-from django.core.files.storage import FileSystemStorage # Only needed for type hinting/default
 
 
-# --- NEW HELPER FUNCTION ---
-# This function is defined in settings.py and imported here via settings
+# -------------------------------------------------------------------
+# Helper: Dynamic storage (optional if using Google Drive or custom storage)
+# -------------------------------------------------------------------
 def get_file_storage():
-    """
-    Returns the appropriate storage class instance based on settings.
-    """
-    return settings.FILE_STORAGE_FUNCTION() 
-# ----------------------------
+    """Return storage callable from settings."""
+    return settings.FILE_STORAGE_FUNCTION()
 
 
+# -------------------------------------------------------------------
+# Download Email Tracking
+# -------------------------------------------------------------------
 class DownloadEmail(models.Model):
     email = models.EmailField(max_length=254)
     document_name = models.CharField(max_length=255, blank=True, null=True)
     user_agent = models.TextField(blank=True, null=True)
     downloaded_at = models.DateTimeField(auto_now_add=True)
-    
+
     class Meta:
         db_table = 'download_emails'
         ordering = ['-downloaded_at']
-        
+
     def __str__(self):
-        return f"{self.email} - {self.document_name} - {self.downloaded_at}"
-    
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
+        return f"{self.email} - {self.document_name} - {self.downloaded_at:%Y-%m-%d %H:%M}"
 
 
+# -------------------------------------------------------------------
+# Contact Form Messages
+# -------------------------------------------------------------------
 class Contact(models.Model):
     PRODUCT_CHOICES = [
         ('', 'Select a product'),
@@ -40,33 +40,35 @@ class Contact(models.Model):
         ('SODIUM CUMENE SULPHONATE', 'SODIUM CUMENE SULPHONATE'),
         ('other', 'Other'),
     ]
-    
+
     name = models.CharField(max_length=100, verbose_name="Full Name")
     email = models.EmailField(verbose_name="Email Address")
     company = models.CharField(max_length=150, blank=True, null=True, verbose_name="Company Name")
     phone = models.CharField(max_length=20, blank=True, null=True, verbose_name="Phone Number")
     product = models.CharField(max_length=50, choices=PRODUCT_CHOICES, blank=True, null=True, verbose_name="Product Interest")
     message = models.TextField(verbose_name="Message")
-    created_at = models.DateTimeField(default=timezone.now, verbose_name="Created At")
-    is_read = models.BooleanField(default=False, verbose_name="Is Read")
-    
+    created_at = models.DateTimeField(default=timezone.now)
+    is_read = models.BooleanField(default=False)
+
     class Meta:
         verbose_name = "Contact Message"
         verbose_name_plural = "Contact Messages"
         ordering = ['-created_at']
-    
+
     def __str__(self):
-        return f"{self.name} - {self.email} ({self.created_at.strftime('%Y-%m-%d %H:%M')})"
-    
+        return f"{self.name} - {self.email}"
+
     @property
     def get_product_display_name(self):
-        """Return the display name for the selected product"""
         for choice in self.PRODUCT_CHOICES:
             if choice[0] == self.product:
                 return choice[1]
         return self.product
 
 
+# -------------------------------------------------------------------
+# Product Category
+# -------------------------------------------------------------------
 class ProductCategory(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
@@ -79,54 +81,71 @@ class ProductCategory(models.Model):
         return self.name
 
 
+# -------------------------------------------------------------------
+# Product Master Model
+# -------------------------------------------------------------------
 class Product(models.Model):
-
-    
     priority = models.IntegerField(default=0, help_text="Higher number = higher priority")
+    category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE, related_name='products')
+
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
-    category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE, related_name='products')
-    short_description = models.TextField()
-    
-    # Specifications
+
+    short_description = models.TextField(blank=True)
+    detailed_description = models.TextField(blank=True)
+
     purity = models.CharField(max_length=150, blank=True, null=True)
     packaging = models.CharField(max_length=150, blank=True, null=True)
-    application = models.CharField(max_length=255, blank=True, null=True)
     grade = models.CharField(max_length=100, blank=True, null=True)
     form = models.CharField(max_length=100, blank=True, null=True)
-    cas_number = models.CharField(max_length=20, blank=True, null=True, verbose_name="CAS Number")
 
-    # Image URL (Google Drive direct link)
+    cas_number = models.CharField(max_length=100, blank=True)
+    formula = models.CharField(max_length=100, blank=True)
+    appearance = models.CharField(max_length=200, blank=True)
+    assay = models.CharField(max_length=100, blank=True)
+    application = models.TextField(blank=True)
+    molecular_weight = models.CharField(max_length=100, blank=True)
+    density = models.CharField(max_length=100, blank=True)
+    boiling_point = models.CharField(max_length=100, blank=True)
+    melting_point = models.CharField(max_length=100, blank=True)
+
+    # Image (with optional Google Drive URL)
     image_url = models.URLField(
-        max_length=500,
-        blank=True,
-        null=True,
-        help_text="Google Drive direct image URL (use format: https://drive.google.com/uc?export=view&id=FILE_ID)"
+        max_length=500, blank=True, null=True,
+        help_text="https://lh3.googleusercontent.com/d/ID)"
     )
-    
-    # Files stored on Google Drive (if using gdstorage)
+    main_image = models.ImageField(upload_to='products/images/', blank=True, null=True)
+    gallery_image_1 = models.ImageField(upload_to='products/images/', blank=True, null=True)
+    gallery_image_2 = models.ImageField(upload_to='products/images/', blank=True, null=True)
+
+    # Files and media
     video = models.FileField(
         upload_to='product_videos/',
-        storage=settings.FILE_STORAGE_FUNCTION,  # ✅ Use callable from settings
-        null=True,
-        blank=True,
+        storage=get_file_storage,
+        null=True, blank=True,
         help_text="Product demonstration video"
     )
     coa_pdf = models.FileField(
         upload_to='product_coa/',
-        storage=settings.FILE_STORAGE_FUNCTION,  # ✅ Use callable from settings
-        null=True,
-        blank=True,
+        storage=get_file_storage,
+        null=True, blank=True,
         help_text="Certificate of Analysis (PDF)"
     )
     tds_pdf = models.FileField(
         upload_to='product_tds/',
-        storage=settings.FILE_STORAGE_FUNCTION,  # ✅ Use callable from settings
-        null=True,
-        blank=True,
+        storage=get_file_storage,
+        null=True, blank=True,
         help_text="Technical Data Sheet (PDF)"
     )
-    
+
+    # Certifications & SEO
+    iso_certifications = models.CharField(max_length=255, blank=True)
+    meta_title = models.CharField(max_length=150, blank=True)
+    meta_description = models.CharField(max_length=300, blank=True)
+    meta_keywords = models.CharField(max_length=300, blank=True)
+
+    # Control fields
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['-priority', 'name']
@@ -134,38 +153,122 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    # --- Utility methods ---
     def has_downloads(self):
-        """Check if product has downloadable files"""
+        """Check if product has downloadable files."""
         return bool(self.coa_pdf or self.tds_pdf)
 
     @property
     def specs(self):
-        """Return product specifications as a dictionary"""
+        """Return product specifications as a dictionary."""
         specs = {}
         if self.purity:
             specs['Purity'] = self.purity
         if self.packaging:
             specs['Packaging'] = self.packaging
-        if self.application:
-            specs['Application'] = self.application
         if self.grade:
             specs['Grade'] = self.grade
         if self.form:
             specs['Form'] = self.form
         if self.cas_number:
             specs['CAS Number'] = self.cas_number
+        if self.application:
+            specs['Application'] = self.application
         return specs
+
     def get_direct_image_url(self):
-        """Convert Google Drive URL to embeddable format"""
+        """Convert Google Drive URL to embeddable format if applicable."""
         if not self.image_url:
             return None
-        
         import re
-        
-        file_id = None
-        
-        # Format 1: /file/d/FILE_ID/view
         match = re.search(r'/file/d/([a-zA-Z0-9_-]+)', self.image_url)
         if match:
             file_id = match.group(1)
+            return f"https://drive.google.com/uc?export=view&id={file_id}"
         return self.image_url
+
+
+# -------------------------------------------------------------------
+# Product FAQs
+# -------------------------------------------------------------------
+class ProductFAQ(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='faqs')
+    question = models.CharField(max_length=300)
+    answer = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.product.name} - {self.question[:40]}"
+
+
+# -------------------------------------------------------------------
+# Product Applications
+# -------------------------------------------------------------------
+class ProductApplication(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='applications')
+    title = models.CharField(max_length=150)
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.product.name} - {self.title}"
+
+
+# -------------------------------------------------------------------
+# Company Informations , FAQs, Blogs Etc.
+# -------------------------------------------------------------------
+
+class CompanyInformation(models.Model):
+    company_name = models.CharField(max_length=200)
+    address = models.TextField()
+    sales_phone = models.CharField(max_length=50)
+    sales_email = models.EmailField()
+    phone = models.CharField(max_length=50)
+    email = models.EmailField()
+    whatsapp_number = models.URLField(max_length=50, blank=True, null=True)
+    facebook_url = models.URLField(blank=True, null=True)
+    linkedin_url = models.URLField(blank=True, null=True)
+    instagram_url = models.URLField(blank=True, null=True)
+    base_url = models.URLField(blank=True, null=True)
+    
+
+    class Meta:
+        verbose_name = "Company Information"
+        verbose_name_plural = "Company Information"
+
+    def __str__(self):
+        return self.company_name
+    
+class CompanyFAQ(models.Model):
+    CompanyInformation = models.ForeignKey(CompanyInformation, on_delete=models.CASCADE, related_name='faqs')
+    question = models.CharField(max_length=300)
+    answer = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.CompanyInformation.company_name} - {self.question[:40]}"
+    
+class CompanyBlog(models.Model):
+    CompanyBlog = models.ForeignKey(CompanyInformation, on_delete=models.CASCADE, related_name='Blogs')
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True)
+    content = models.TextField()
+    published_at = models.DateTimeField(default=timezone.now)
+    author = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ['-published_at']
+
+    def __str__(self):
+        return self.title
+    
+class ProductBlog(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='Blogs')
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True)
+    content = models.TextField()
+    published_at = models.DateTimeField(default=timezone.now)
+    author = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ['-published_at']
+
+    def __str__(self):
+        return self.title
