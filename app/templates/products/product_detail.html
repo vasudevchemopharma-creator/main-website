@@ -420,62 +420,117 @@
 
     /* FAQ Section */
     .faq-section {
+      padding: 80px 0;
+      background: #f8f9fa;
       margin-top: 50px;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
     }
 
-    .faq-section h2 {
-      font-size: 1.8rem;
-      margin-bottom: 20px;
-      text-align: center;
+    .faq-container {
+      max-width: 900px;
+      margin: 0 auto;
     }
 
-    /* FAQ items stretch full width of screen */
     .faq-item {
-      border-bottom: 1px solid #ddd;
-      padding: 18px 0;
-      position: relative;
-      /* for arrow */
-    }
-
-    .faq-item h3 {
-      font-size: 1rem;
-      /* reduced size */
-      margin: 0;
-      cursor: pointer;
-      color: #1a2a80;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: color 0.3s ease;
-    }
-
-    .faq-item h3:hover {
-      color: #38b2ac;
-    }
-
-    .faq-item p {
-      display: none;
-      margin-top: 8px;
-      font-size: 0.95rem;
-      color: #333;
-      line-height: 1.5;
-    }
-
-    .faq-item.active p {
-      display: block;
-    }
-
-    /* Arrow styling and rotation */
-    .arrow {
+      background: white;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
       transition: transform 0.3s ease;
     }
 
-    .faq-item.active .arrow {
+    .faq-item:hover {
+      transform: translateY(-3px);
+    }
+
+    .faq-question {
+      padding: 25px 30px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      transition: background 0.3s ease;
+      font-weight: 600;
+      color: #1a365d;
+      font-size: 1.1rem;
+    }
+
+    .faq-question:hover {
+      background: #f8f9fa;
+    }
+
+    .faq-question i {
+      font-size: 1.3rem;
+      transition: transform 0.3s ease;
+      color: #4fd1c7;
+    }
+
+    .faq-item.active .faq-question i {
       transform: rotate(180deg);
-      /* points up when open */
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+      padding: 0 30px;
+      color: #4a5568;
+      line-height: 1.8;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 500px;
+      padding: 0 30px 25px;
+    }
+
+    /* Responsive Design for FAQs */
+    @media (max-width: 768px) {
+      .faq-section {
+        padding: 60px 0;
+      }
+
+      .faq-question {
+        padding: 18px 20px;
+        font-size: 1rem;
+      }
+
+      .faq-answer {
+        padding: 0 20px;
+        font-size: 0.95rem;
+      }
+
+      .faq-item.active .faq-answer {
+        padding: 0 20px 18px;
+      }
+
+      .faq-question i {
+        font-size: 1.1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .faq-section {
+        padding: 50px 0;
+      }
+
+      .faq-item {
+        margin-bottom: 15px;
+      }
+
+      .faq-question {
+        padding: 15px;
+        font-size: 0.95rem;
+      }
+
+      .faq-answer {
+        padding: 0 15px;
+        font-size: 0.9rem;
+      }
+
+      .faq-item.active .faq-answer {
+        padding: 0 15px 15px;
+      }
     }
   </style>
 </head>
@@ -896,21 +951,24 @@
       </div>
 
       <section class="faq-section" id="faq">
-        <h2>Frequently Asked Questions About {{ product.name }}</h2>
-
-        {% if faqs %}
-        {% for faq in faqs %}
-        <div class="faq-item">
-          <h3>{{ faq.question }} <span class="arrow">&#9662;</span></h3>
-          <p>
-            {{ faq.answer }}
-          </p>
+        <div class="container">
+          <h2 class="section-title">Frequently Asked Questions About {{ product.name }}</h2>
+          <div class="faq-container">
+            {% if faqs %}
+            {% for faq in faqs %}
+            <div class="faq-item">
+              <div class="faq-question">
+                <span>{{ faq.question }}</span>
+                <i class="bi bi-chevron-down"></i>
+              </div>
+              <div class="faq-answer">{{ faq.answer }}</div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No FAQs are currently available for this product.</p>
+            {% endif %}
+          </div>
         </div>
-        {% endfor %}
-        {% else %}
-        <p>No FAQs are currently available for this product.</p>
-        {% endif %}
-
       </section>
     </div>
   </section>
@@ -1047,16 +1105,19 @@
       observer.observe(video);
     });
     document.addEventListener("DOMContentLoaded", function () {
-      const faqs = document.querySelectorAll(".faq-item h3");
+      const faqItems = document.querySelectorAll(".faq-item");
 
-      faqs.forEach((question) => {
+      faqItems.forEach((item) => {
+        const question = item.querySelector(".faq-question");
         question.addEventListener("click", () => {
-          document.querySelectorAll(".faq-item").forEach((item) => {
-            if (item !== question.parentElement) {
-              item.classList.remove("active");
+          // Close other FAQ items
+          faqItems.forEach((otherItem) => {
+            if (otherItem !== item) {
+              otherItem.classList.remove("active");
             }
           });
-          question.parentElement.classList.toggle("active");
+          // Toggle current FAQ item
+          item.classList.toggle("active");
         });
       });
     });
