@@ -142,8 +142,8 @@ class Product(models.Model):
     # Certifications & SEO
     iso_certifications = models.CharField(max_length=255, blank=True)
     meta_title = models.CharField(max_length=150, blank=True)
-    meta_description = models.CharField(max_length=300, blank=True)
-    meta_keywords = models.CharField(max_length=300, blank=True)
+    meta_description = models.CharField(max_length=800, blank=True)
+    meta_keywords = models.CharField(max_length=1300, blank=True)
     # Schema / reviews
     schema_rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.0,
                                         help_text='Average rating for schema.org (0.00 - 5.00)')
@@ -252,8 +252,8 @@ class CompanyInformation(models.Model):
     base_url = models.URLField(blank=True, null=True)
     # Site-wide SEO fields
     meta_title = models.CharField(max_length=150, blank=True)
-    meta_description = models.CharField(max_length=300, blank=True)
-    meta_keywords = models.CharField(max_length=300, blank=True)
+    meta_description = models.CharField(max_length=800, blank=True)
+    meta_keywords = models.CharField(max_length=1300, blank=True)
     
 
     class Meta:
@@ -280,8 +280,8 @@ class CompanyBlog(models.Model):
     author = models.CharField(max_length=100)
     # SEO fields
     meta_title = models.CharField(max_length=150, blank=True)
-    meta_description = models.CharField(max_length=300, blank=True)
-    meta_keywords = models.CharField(max_length=300, blank=True)
+    meta_description = models.CharField(max_length=800, blank=True)
+    meta_keywords = models.CharField(max_length=1300, blank=True)
 
     class Meta:
         ordering = ['-published_at']
@@ -307,8 +307,8 @@ class ProductBlog(models.Model):
     author = models.CharField(max_length=100)
     # SEO fields
     meta_title = models.CharField(max_length=150, blank=True)
-    meta_description = models.CharField(max_length=300, blank=True)
-    meta_keywords = models.CharField(max_length=300, blank=True)
+    meta_description = models.CharField(max_length=800, blank=True)
+    meta_keywords = models.CharField(max_length=1300, blank=True)
 
     class Meta:
         ordering = ['-published_at']
