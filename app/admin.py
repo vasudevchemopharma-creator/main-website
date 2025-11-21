@@ -33,7 +33,7 @@ class ProductApplicationInline(admin.TabularInline):
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
         'name', 'category', 'purity', 'grade', 'form',
-        'priority', 'is_active'
+        'priority', 'is_active', 'schema_rating', 'schema_review_count'
     )
     list_filter = ('category', 'is_active')
     search_fields = ('name', 'category__name', 'cas_number')
@@ -66,7 +66,8 @@ class ProductAdmin(admin.ModelAdmin):
         ('Certifications & SEO', {
             'fields': (
                 'iso_certifications', 'meta_title',
-                'meta_description', 'meta_keywords'
+                'meta_description', 'meta_keywords',
+                'schema_rating', 'schema_review_count'
             )
         }),
     )
@@ -135,6 +136,11 @@ class CompanyInformationAdmin(admin.ModelAdmin):
     list_display = ('company_name', 'sales_phone', 'sales_email', 'phone', 'email')
     search_fields = ('company_name', 'sales_email', 'phone')
     inlines = [CompanyFAQInline]
+    fieldsets = (
+        (None, {'fields': ('company_name', 'address', 'sales_phone', 'sales_email', 'phone', 'email')}),
+        ('Social & Links', {'fields': ('whatsapp_number', 'facebook_url', 'linkedin_url', 'instagram_url', 'base_url')}),
+        ('SEO', {'fields': ('meta_title', 'meta_description', 'meta_keywords')}),
+    )
 
 
 @admin.register(CompanyFAQ)
@@ -154,6 +160,10 @@ class CompanyBlogAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     list_filter = ('published_at',)
     ordering = ('-published_at',)
+    fieldsets = (
+        (None, {'fields': ('CompanyBlog', 'title', 'slug', 'content', 'author', 'published_at')}),
+        ('SEO', {'fields': ('meta_title', 'meta_description', 'meta_keywords')}),
+    )
 
     def company_name(self, obj):
         return obj.CompanyBlog.company_name
@@ -167,6 +177,10 @@ class ProductBlogAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     list_filter = ('published_at',)
     ordering = ('-published_at',)
+    fieldsets = (
+        (None, {'fields': ('product', 'title', 'slug', 'content', 'author', 'published_at')}),
+        ('SEO', {'fields': ('meta_title', 'meta_description', 'meta_keywords')}),
+    )
 
     def product_name(self, obj):
         return obj.product.name
