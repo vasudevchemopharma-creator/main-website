@@ -117,14 +117,12 @@
           {
             "@type": "CreativeWork",
             "name": "{{ product.name }} - Technical Data Sheet (TDS)",
-            "url": "{{ request.build_absolute_uri(product.tds_pdf.url) }}"
           }{% if product.coa_pdf %},{% endif %}
           {% endif %}
           {% if product.coa_pdf %}
           {
             "@type": "CreativeWork",
             "name": "{{ product.name }} - Certificate of Analysis (COA)",
-            "url": "{{ request.build_absolute_uri(product.coa_pdf.url) }}"
           }
           {% endif %}
         ]
