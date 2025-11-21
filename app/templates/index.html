@@ -5,19 +5,10 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chemical Manufacturer Ankleshwar | Vasudev Chemo Pharma India</title>
-    <meta name="description"
-        content="Vasudev Chemo Pharma is a leading MEA Triazine manufacturer and H₂S scavenger supplier in India. We provide high-quality MEA Triazine 75%, 78%, and 80% grades for the oil & gas industry, wastewater treatment, and paper industry." />
-    <meta name="keywords"
-        content="MEA Triazine manufacturer India, H2S Scavenger supplier India, Hydrogen Sulfide Removal, MEA Triazine exporter, Triazine scavenger chemical, Oilfield gas treatment chemicals, MEA Triazine 80%, MEA Triazine price, Vasudev Chemo Pharma, Crude oil sweetening chemicals,
-            MEA Triazine H2S scavenger,Hydrogen sulfide scavenger oil and gas,Triazine H2S scavenger,MEA Triazine sour gas treatment,H2S removal chemical,Hexahydro-1,3,5-tris(2-hydroxyethyl)-s-triazine,MEA Triazine CAS number (4719-04-4),MEA Triazine chemical formula (C9H21N3O3),Triazine 80% solution,
-            Monoethanolamine based triazine,MEA Triazine biocide,MEA Triazine metalworking fluid preservative,MEA Triazine wastewater treatment,MEA Triazine desulfurizer,MEA Triazine for oil and gas industry,MEA Triazine price per kg/ton,
-            MEA Triazine supplier,MEA Triazine technical data sheet (TDS),MEA Triazine manufacturers,Triazine solution 80%,MEA Triazine vs MMA Triazine,MEA Triazine scale formation,MEA Triazine disadvantages,
-            MEA Triazine reaction products,MEA Triazine biodegradability,MEA Triazine reaction with hydrogen sulfide,H2S scavenger liquid for natural gas,Cost-effective H2S scavenger MEA Triazine,How to use MEA Triazine in oilfield,MEA Triazine vs non-triazine H2S scavengers,
-            Monoethanolamine Triazine concentration,MSDS for MEA Triazine 80%,Chemical structure of MEA Triazine,Hexahydro-1,3,5-triazine uses,MEA Triazine GHS label and hazards,MEA Triazine fungicide applications,MEA Triazine in drilling mud formulations,
-            MEA Triazine for biogas purification,MEA Triazine in crude oil refining,Triazine for produced water treatment,MEA Triazine manufacturers and suppliers,Buy MEA Triazine in bulk,Triazine market size and trends,Best triazine H2S scavenger brand,
-            MEA Triazine export and shipping,MEA Triazine solids formation mitigation,Alternatives to MEA Triazine H2S scavenger,MEA Triazine corrosion inhibitor,MEA Triazine dosing rate for H2S,Triazine-based biocide vs non-formaldehyde" />
-    <link rel="canonical" href="https://vasudevchemopharma.com/" />
+    <title>{% if company_info and company_info.meta_title %}{{ company_info.meta_title }}{% else %}Chemical Manufacturer Ankleshwar | Vasudev Chemo Pharma India{% endif %}</title>
+    <meta name="description" content="{% if company_info and company_info.meta_description %}{{ company_info.meta_description }}{% else %}Vasudev Chemo Pharma is a leading MEA Triazine manufacturer and H₂S scavenger supplier in India. We provide high-quality MEA Triazine 75%, 78%, and 80% grades for the oil & gas industry, wastewater treatment, and paper industry.{% endif %}" />
+    <meta name="keywords" content="{% if company_info and company_info.meta_keywords %}{{ company_info.meta_keywords }}{% else %}MEA Triazine manufacturer India, H2S Scavenger supplier India, Hydrogen Sulfide Removal, MEA Triazine exporter, Triazine scavenger chemical{% endif %}" />
+    <link rel="canonical" href="{{ request.build_absolute_uri }}" />
     <meta name="robots" content="index, follow" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="keywords"

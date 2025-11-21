@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
@@ -14,6 +14,7 @@ from .models import (
     Contact, Product, ProductCategory, CompanyInformation, 
     CompanyFAQ, ProductBlog, CompanyBlog
 )
+from django.db import OperationalError, ProgrammingError
 
 logger = logging.getLogger(__name__)
 
@@ -94,7 +95,12 @@ def save_email_for_download(request):
 def index(request):
     """Main index view that handles both GET and POST requests"""
     Faqs = CompanyFAQ.objects.all()
-    Com_info = CompanyInformation.objects.first()
+    # CompanyInformation may not have new columns until migrations run
+    try:
+        Com_info = CompanyInformation.objects.first()
+    except (OperationalError, ProgrammingError) as e:
+        logger.warning('CompanyInformation not available yet: %s', e)
+        Com_info = None
     
     # Get recent blogs for homepage
     recent_company_blogs = CompanyBlog.objects.all()[:3]
@@ -255,7 +261,11 @@ def product_detail(request, slug):
 # New Blog Views
 def blog_list(request):
     """Display all company blogs"""
-    company_info = CompanyInformation.objects.first()
+    try:
+        company_info = CompanyInformation.objects.first()
+    except (OperationalError, ProgrammingError) as e:
+        logger.warning('CompanyInformation not available yet: %s', e)
+        company_info = None
     blogs = CompanyBlog.objects.all()
     
     context = {
@@ -267,7 +277,11 @@ def blog_list(request):
 
 def blog_detail(request, slug):
     """Display individual blog post"""
-    company_info = CompanyInformation.objects.first()
+    try:
+        company_info = CompanyInformation.objects.first()
+    except (OperationalError, ProgrammingError) as e:
+        logger.warning('CompanyInformation not available yet: %s', e)
+        company_info = None
     blog = get_object_or_404(CompanyBlog, slug=slug)
     
     # Get related blogs
@@ -296,3 +310,14 @@ def product_blog_detail(request, slug):
         'related_blogs': related_blogs,
     }
     return render(request, 'product_blog_detail.html', context)
+
+
+def robots_txt(request):
+    """Serve a robots.txt dynamically including sitemap location."""
+    lines = [
+        "User-agent: *",
+        "Disallow: /admin/",
+        "Allow: /",
+        f"Sitemap: {request.build_absolute_uri('/sitemap.xml')}",
+    ]
+    return HttpResponse('\n'.join(lines), content_type='text/plain')

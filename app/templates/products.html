@@ -5,7 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Products - Vasudev Chemo Pharma </title>
+    <title>{% if company_info and company_info.meta_title %}{{ company_info.meta_title }} - Products{% else %}Our Products - Vasudev Chemo Pharma{% endif %}</title>
+    <meta name="description" content="{% if company_info and company_info.meta_description %}{{ company_info.meta_description }}{% else %}Browse our range of industrial and specialty chemicals, including MEA Triazine, P-Toluene Sulphonic Acid and more.{% endif %}">
     <link rel="icon" type="image/png" href="{% static 'media/logo.jpg' %}">
     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
     <!-- Bootstrap 5 CSS -->

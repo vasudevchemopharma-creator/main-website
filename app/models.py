@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
+from django.utils.html import strip_tags
 
 
 # -------------------------------------------------------------------
@@ -143,6 +144,10 @@ class Product(models.Model):
     meta_title = models.CharField(max_length=150, blank=True)
     meta_description = models.CharField(max_length=300, blank=True)
     meta_keywords = models.CharField(max_length=300, blank=True)
+    # Schema / reviews
+    schema_rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.0,
+                                        help_text='Average rating for schema.org (0.00 - 5.00)')
+    schema_review_count = models.IntegerField(default=0, help_text='Number of reviews for schema.org')
 
     # Control fields
     is_active = models.BooleanField(default=True)
@@ -187,6 +192,23 @@ class Product(models.Model):
             return f"https://drive.google.com/uc?export=view&id={file_id}"
         return self.image_url
 
+    def save(self, *args, **kwargs):
+        """Auto-generate meta_description when empty using short/detailed description."""
+        # Prefer existing value
+        if not self.meta_description:
+            # pick the most descriptive field available
+            source = self.short_description or self.detailed_description or ''
+            # strip any HTML and truncate to ~150 chars for SERP
+            clean = strip_tags(source)[:160].strip()
+            # ensure we don't cut in the middle of a word if possible
+            if len(clean) > 150:
+                # cut at last space before 150
+                idx = clean.rfind(' ', 0, 150)
+                if idx > 50:
+                    clean = clean[:idx]
+            self.meta_description = clean
+        super().save(*args, **kwargs)
+
 
 # -------------------------------------------------------------------
 # Product FAQs
@@ -228,6 +250,10 @@ class CompanyInformation(models.Model):
     linkedin_url = models.URLField(blank=True, null=True)
     instagram_url = models.URLField(blank=True, null=True)
     base_url = models.URLField(blank=True, null=True)
+    # Site-wide SEO fields
+    meta_title = models.CharField(max_length=150, blank=True)
+    meta_description = models.CharField(max_length=300, blank=True)
+    meta_keywords = models.CharField(max_length=300, blank=True)
     
 
     class Meta:
@@ -252,12 +278,25 @@ class CompanyBlog(models.Model):
     content = models.TextField()
     published_at = models.DateTimeField(default=timezone.now)
     author = models.CharField(max_length=100)
+    # SEO fields
+    meta_title = models.CharField(max_length=150, blank=True)
+    meta_description = models.CharField(max_length=300, blank=True)
+    meta_keywords = models.CharField(max_length=300, blank=True)
 
     class Meta:
         ordering = ['-published_at']
 
     def __str__(self):
         return self.title
+    def save(self, *args, **kwargs):
+        if not self.meta_description:
+            clean = strip_tags(self.content)[:160].strip()
+            if len(clean) > 150:
+                idx = clean.rfind(' ', 0, 150)
+                if idx > 50:
+                    clean = clean[:idx]
+            self.meta_description = clean
+        super().save(*args, **kwargs)
     
 class ProductBlog(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='Blogs')
@@ -266,9 +305,22 @@ class ProductBlog(models.Model):
     content = models.TextField()
     published_at = models.DateTimeField(default=timezone.now)
     author = models.CharField(max_length=100)
+    # SEO fields
+    meta_title = models.CharField(max_length=150, blank=True)
+    meta_description = models.CharField(max_length=300, blank=True)
+    meta_keywords = models.CharField(max_length=300, blank=True)
 
     class Meta:
         ordering = ['-published_at']
 
     def __str__(self):
         return self.title
+    def save(self, *args, **kwargs):
+        if not self.meta_description:
+            clean = strip_tags(self.content)[:160].strip()
+            if len(clean) > 150:
+                idx = clean.rfind(' ', 0, 150)
+                if idx > 50:
+                    clean = clean[:idx]
+            self.meta_description = clean
+        super().save(*args, **kwargs)

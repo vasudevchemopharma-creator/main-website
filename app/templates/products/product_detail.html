@@ -5,39 +5,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>
-    {{ product.name }} Manufacturer & Supplier in India | Vasudev Chemo Pharma
-  </title>
+  <title>{% if product.meta_title %}{{ product.meta_title }}{% else %}{{ product.name }} Manufacturer & Supplier in India | Vasudev Chemo Pharma{% endif %}</title>
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="{% static 'media/logo.jpg' %}" />
 
   <!-- Meta Description -->
-  <meta name="description"
-    content="Vasudev Chemo Pharma is a leading MEA Triazine manufacturer and H₂S Scavenger supplier in India. Our MEA Triazine 80% offers high-efficiency Hydrogen Sulfide removal for oil, gas, and crude processing industries. Available in 40%, 50%, 60%, and 80% concentrations." />
+  <meta name="description" content="{% if product.meta_description %}{{ product.meta_description }}{% else %}{{ product.short_description|default:product.detailed_description|striptags|truncatechars:160 }}{% endif %}" />
 
-  <!-- Keywords (comprehensive set derived from provided list) -->
-  <meta name="keywords"
-    content="H2S scavenger,Hydrogen sulfide scavenger,H2S scavenger for oil and gas,Best H2S scavenger,H2S scavenger price,Triazine H2S scavenger,MEA triazine H2S scavenger,Non-amine H2S scavenger,Zinc based H2S scavenger,Oil soluble H2S scavenger,Water soluble H2S scavenger,H2S scavenger for crude oil,H2S scavenger for natural gas,H2S scavenger for wastewater,Liquid H2S scavenger,Solid H2S scavenger,Regenerative H2S scavenger,Non-regenerative H2S scavenger,H2S removal chemical,Gas sweetening H2S,H2S odor control,H2S corrosion prevention,H2S scavenger manufacturers,H2S scavenger suppliers,Buy H2S scavenger online,H2S scavenger dosage,H2S scavenger injection,H2S scavenger reaction,H2S scavenger efficiency,H2S scavenger for refineries,H2S scavenger for offshore,H2S scavenger for onshore,Amine based H2S scavenger,Metal based H2S scavenger,Aldehyde H2S scavenger,Glyoxal H2S scavenger,H2S scavenger for heavy oil,H2S scavenger for bunker fuel,H2S scavenger triazine vs zinc,H2S scavenger vs liquid redox,Non-nitrogen H2S scavenger,H2S scavenger for high temperature,H2S scavenger for low concentration,H2S scavenger for high concentration,H2S scavenger in water systems,H2S scavenger for produced water,H2S scavenger for sour gas,H2S scavenger for condensate,H2S scavenger for flare gas,H2S scavenger for LPG,H2S scavenger for biogases,H2S scavenger for petrochemical plants,H2S scavenger for tank degassing,H2S scavenger for decontamination,H2S scavenger for LEL degassing,H2S scavenger biodegradable byproducts,MEA Triazine,MEA Triazine 80%,MEA Triazine technical data sheet,MEA Triazine supplier India,Top MEA triazine supplier,Best H2S scavenger supplier India" />
+  <!-- Keywords -->
+  <meta name="keywords" content="{% if product.meta_keywords %}{{ product.meta_keywords }}{% else %}{{ product.meta_keywords }}{% endif %}" />
 
   <!-- Canonical -->
-  <link rel="canonical" href="https://vasudevchemopharma.com/MEA-Triazine" />
+  <link rel="canonical" href="{{ request.build_absolute_uri }}" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="product" />
-  <meta property="og:title" content="MEA Triazine 80% | H₂S Scavenger Manufacturer & Supplier in India" />
-  <meta property="og:description"
-    content="Leading MEA Triazine manufacturer & exporter in India. High-efficiency H₂S Scavenger for crude oil, gas, and hydrocarbon treatment." />
-  <meta property="og:image" content="{% static 'media/MEA-Triazine.jpg' %}" />
-  <meta property="og:url" content="https://vasudevchemopharma.com/MEA-Triazine" />
+  <meta property="og:title" content="{% if product.meta_title %}{{ product.meta_title }}{% else %}{{ product.name }} | Vasudev Chemo Pharma{% endif %}" />
+  <meta property="og:description" content="{% if product.meta_description %}{{ product.meta_description }}{% else %}{{ product.short_description|default:product.detailed_description|striptags|truncatechars:160 }}{% endif %}" />
+  <meta property="og:image" content="{% if product.get_direct_image_url %}{{ product.get_direct_image_url }}{% elif product.main_image %}{{ product.main_image.url }}{% else %}{% static 'media/MEA-Triazine.jpg' %}{% endif %}" />
+  <meta property="og:url" content="{{ request.build_absolute_uri }}" />
   <meta property="og:site_name" content="Vasudev Chemo Pharma" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="MEA Triazine 80% | MEA Triazine Manufacturer & Exporter" />
-  <meta name="twitter:description"
-    content="Buy MEA Triazine 80% from Vasudev Chemo Pharma — trusted H₂S scavenger manufacturer in India for hydrogen sulfide removal." />
-  <meta name="twitter:image" content="{% static 'media/MEA-Triazine.jpg' %}" />
+  <meta name="twitter:title" content="{% if product.meta_title %}{{ product.meta_title }}{% else %}{{ product.name }} | Vasudev Chemo Pharma{% endif %}" />
+  <meta name="twitter:description" content="{% if product.meta_description %}{{ product.meta_description }}{% else %}{{ product.short_description|default:product.detailed_description|striptags|truncatechars:160 }}{% endif %}" />
+  <meta name="twitter:image" content="{% if product.get_direct_image_url %}{{ product.get_direct_image_url }}{% elif product.main_image %}{{ product.main_image.url }}{% else %}{% static 'media/MEA-Triazine.jpg' %}{% endif %}" />
 
   <!-- Organization Schema -->
   <script type="application/ld+json">
@@ -96,67 +90,43 @@
       {
         "@context": "https://schema.org/",
         "@type": "Product",
-        "name": "MEA Triazine 80% H₂S Scavenger",
-        "alternateName": [
-          "Hydrogen Sulfide Scavenger",
-          "Triazine H2S Scavenger",
-          "MEA Triazine Scavenger"
-        ],
-        "image": "https://vasudevchemopharma.com/static/media/MEA-Triazine.jpg",
-        "description": "MEA Triazine 80% is a triazine-based hydrogen sulfide (H₂S) scavenger used to remove H₂S in oil, gas, refinery, and wastewater applications. Available in 40%, 50%, 60% and 80% concentrations.",
+        "name": "{{ product.name|escapejs }}",
+        "description": "{% if product.meta_description %}{{ product.meta_description|escapejs }}{% else %}{{ product.short_description|default:product.detailed_description|striptags|truncatechars:200|escapejs }}{% endif %}",
+  "image": "{% if product.get_direct_image_url %}{{ product.get_direct_image_url }}{% elif product.main_image %}{{ request.scheme }}://{{ request.get_host }}{{ product.main_image.url }}{% else %}{% static 'media/MEA-Triazine.jpg' %}{% endif %}",
         "brand": { "@type": "Brand", "name": "Vasudev Chemo Pharma" },
         "manufacturer": {
           "@type": "Organization",
           "name": "Vasudev Chemo Pharma",
-          "url": "https://vasudevchemopharma.com/"
+          "url": "{{ request.scheme }}://{{ request.get_host }}/"
         },
-        "sku": "VCP-MEA-80",
-        "mpn": "MEA-80",
-        "category": "H₂S Scavenger Chemical",
-        "material": "Monoethanolamine Triazine",
-        "keywords": [
-          "H2S scavenger",
-          "Hydrogen sulfide scavenger",
-          "MEA Triazine 80%",
-          "Triazine H2S scavenger",
-          "Non-amine H2S scavenger",
-          "Zinc based H2S scavenger",
-          "Oil soluble H2S scavenger",
-          "Water soluble H2S scavenger",
-          "H2S removal chemical",
-          "gas sweetening",
-          "crude oil sweetening",
-          "H2S odor control",
-          "H2S corrosion prevention",
-          "H2S scavenger price",
-          "H2S scavenger supplier India",
-          "MEA Triazine datasheet",
-          "TDS",
-          "COA",
-          "bulk H2S scavenger"
-        ],
+        "category": "{{ product.category.name|default:'' }}",
+        "keywords": "{{ product.meta_keywords|default:'' }}",
         "offers": {
           "@type": "Offer",
-          "url": "https://vasudevchemopharma.com/MEA-Triazine",
+          "url": "{{ request.build_absolute_uri }}",
           "priceCurrency": "INR",
           "availability": "https://schema.org/InStock"
         },
         "aggregateRating": {
           "@type": "AggregateRating",
-          "ratingValue": "4.8",
-          "reviewCount": "12"
+          "ratingValue": "{{ product.schema_rating|default:0 }}",
+          "reviewCount": "{{ product.schema_review_count|default:0 }}"
         },
         "hasPart": [
+          {% if product.tds_pdf %}
           {
             "@type": "CreativeWork",
-            "name": "MEA Triazine 80% - Technical Data Sheet (TDS)",
-            "url": "https://vasudevchemopharma.com/static/media/VCP-003-TDS.pdf"
-          },
+            "name": "{{ product.name }} - Technical Data Sheet (TDS)",
+            "url": "{{ request.build_absolute_uri(product.tds_pdf.url) }}"
+          }{% if product.coa_pdf %},{% endif %}
+          {% endif %}
+          {% if product.coa_pdf %}
           {
             "@type": "CreativeWork",
-            "name": "MEA Triazine 80% - Certificate of Analysis (COA)",
-            "url": "https://vasudevchemopharma.com/static/media/VCP-080-COA.pdf"
+            "name": "{{ product.name }} - Certificate of Analysis (COA)",
+            "url": "{{ request.build_absolute_uri(product.coa_pdf.url) }}"
           }
+          {% endif %}
         ]
       }
     </script>

@@ -15,7 +15,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+from django.contrib.sitemaps.views import sitemap
 from . import views
+from .sitemaps import ProductSitemap, CompanyBlogSitemap, ProductBlogSitemap
+
+sitemaps = {
+    'products': ProductSitemap,
+    'company_blogs': CompanyBlogSitemap,
+    'product_blogs': ProductBlogSitemap,
+}
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -27,5 +35,8 @@ urlpatterns = [
     path('contact/ajax/', views.contact_ajax, name='contact_ajax'),
     path('product/<slug:slug>/', views.product_detail, name='product_detail'),
     path('product/<slug:slug>/', views.product_detail, name='product_detail'),
+    # SEO: sitemap and robots
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('robots.txt', views.robots_txt, name='robots_txt'),
 ]
 
