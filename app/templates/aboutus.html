@@ -531,6 +531,10 @@
         }
 
         @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
             .menu-toggle {
                 display: block;
             }
@@ -567,6 +571,11 @@
                 font-size: 2.2rem;
             }
 
+            .page-header p {
+                font-size: 1.1rem;
+                padding: 0 10px;
+            }
+
             .section {
                 padding: 50px 0;
             }
@@ -582,8 +591,34 @@
                 gap: 3rem;
             }
 
+            .overview-text p,
+            .quality-text p {
+                font-size: 1rem;
+                margin-bottom: 1.2rem;
+                line-height: 1.6;
+                text-align: left;
+            }
+
+            .overview-image {
+                height: 300px;
+            }
+
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+
+            .mvv-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .mvv-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
                 gap: 2rem;
             }
 
@@ -597,31 +632,112 @@
                 padding-left: 3rem !important;
                 padding-right: 0 !important;
             }
+
+            .certifications-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
         }
 
         @media (max-width: 480px) {
             .container {
-                padding: 0 20px;
+                padding: 0 15px;
             }
 
             .logo {
-                font-size: 1.4rem;
+                font-size: 1.2rem;
+            }
+
+            .page-header {
+                padding: 60px 0 40px;
             }
 
             .page-header h1 {
                 font-size: 1.8rem;
             }
 
+            .page-header p {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 40px 0;
+            }
+
             .section-title {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
+                margin-bottom: 2rem;
+            }
+
+            .overview-text p,
+            .quality-text p {
+                font-size: 0.95rem;
+                margin-bottom: 1rem;
+            }
+
+            .overview-image {
+                height: 250px;
             }
 
             .stats-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
 
             .stat-number {
                 font-size: 2.5rem;
+            }
+
+            .stat-label {
+                font-size: 1rem;
+            }
+
+            .mvv-card {
+                padding: 2rem 1.2rem;
+            }
+
+            .mvv-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .mvv-card h3 {
+                font-size: 1.3rem;
+            }
+
+            .mvv-card p {
+                font-size: 0.95rem;
+            }
+
+            .timeline-item {
+                padding-left: 2.5rem !important;
+            }
+
+            .timeline-content {
+                padding: 1.5rem;
+            }
+
+            .timeline-year {
+                font-size: 0.9rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .timeline-content h4 {
+                font-size: 1.1rem;
+            }
+
+            .timeline-content p {
+                font-size: 0.9rem;
+            }
+
+            .quality-text h3 {
+                font-size: 1.5rem;
+            }
+
+            .cert-badge {
+                padding: 1.2rem;
+                font-size: 0.9rem;
             }
 
             /* sticky-enquiry.css */
