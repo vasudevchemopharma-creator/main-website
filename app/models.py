@@ -278,6 +278,7 @@ class CompanyBlog(models.Model):
     content = models.TextField()
     published_at = models.DateTimeField(default=timezone.now)
     author = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='blog_images/', blank=True, null=True)
     # SEO fields
     meta_title = models.CharField(max_length=150, blank=True)
     meta_description = models.CharField(max_length=800, blank=True)

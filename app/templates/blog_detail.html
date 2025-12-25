@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% if blog.meta_title %}{{ blog.meta_title }}{% else %}{{ blog.title }} - Vasudev Chemo Pharma{% endif %}</title>
+    <meta name="description" content="{% if blog.meta_description %}{{ blog.meta_description }}{% else %}Read our latest blog post: {{ blog.title }}{% endif %}" />
+    <meta name="keywords" content="{% if blog.meta_keywords %}{{ blog.meta_keywords }}{% else %}blog, article, Vasudev Chemo Pharma{% endif %}" />
+    <meta name="author" content="{{ blog.author }}" />
+    <meta property="og:title" content="{{ blog.title }}" />
+    <meta property="og:description" content="{% if blog.meta_description %}{{ blog.meta_description }}{% else %}Read our latest blog post: {{ blog.title }}{% endif %}" />
+    {% if blog.image %}
+    <meta property="og:image" content="{{ request.build_absolute_uri }}{{ blog.image.url }}" />
+    {% endif %}
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:type" content="article" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="canonical" href="{{ request.build_absolute_uri }}" />
+    <link rel="icon" type="image/png" href="/static/media/logo.jpg" />
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css" />
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+</head>
+
+<body>
+    <!-- Header & Navigation -->
+    <header>{% include 'navbar.html' %}</header>
+
+    <!-- Blog Detail Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <!-- Blog Header -->
+                    <div class="blog-detail-header mb-5">
+                        {% if blog.image %}
+                        <div class="blog-detail-image mb-4">
+                            <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="img-fluid rounded" />
+                        </div>
+                        {% endif %}
+
+                        <h1 class="blog-detail-title mb-3">{{ blog.title }}</h1>
+
+                        <div class="blog-meta d-flex align-items-center mb-4">
+                            <div class="blog-author me-4">
+                                <i class="bi bi-person-circle me-2"></i>
+                                <span>{{ blog.author }}</span>
+                            </div>
+                            <div class="blog-date">
+                                <i class="bi bi-calendar me-2"></i>
+                                <span>{{ blog.published_at|date:"F j, Y" }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Blog Content -->
+                    <div class="blog-content">
+                        {{ blog.content|safe }}
+                    </div>
+
+                    <!-- Back to Blogs -->
+                    <div class="mt-5 pt-4 border-top">
+                        <a href="{% url 'index' %}#blogs" class="btn btn-outline-primary">
+                            <i class="bi bi-arrow-left me-2"></i>Back to Blogs
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Blogs Section -->
+    {% if related_blogs %}
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Related Articles</h2>
+            <div class="row">
+                {% for related_blog in related_blogs %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        {% if related_blog.image %}
+                        <img src="{{ related_blog.image.url }}" class="card-img-top" alt="{{ related_blog.title }}" style="height: 200px; object-fit: cover;" />
+                        {% else %}
+                        <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
+                            <i class="bi bi-file-text text-muted" style="font-size: 3rem;"></i>
+                        </div>
+                        {% endif %}
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ related_blog.title }}</h5>
+                            <p class="card-text text-muted small">
+                                <i class="bi bi-person-circle me-1"></i>{{ related_blog.author }} |
+                                <i class="bi bi-calendar me-1"></i>{{ related_blog.published_at|date:"M j, Y" }}
+                            </p>
+                            <a href="{% url 'blog_detail' related_blog.slug %}" class="btn btn-primary mt-auto">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Footer -->
+    {% include 'footer.html' %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+</body>
+</html>

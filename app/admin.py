@@ -161,7 +161,7 @@ class CompanyBlogAdmin(admin.ModelAdmin):
     list_filter = ('published_at',)
     ordering = ('-published_at',)
     fieldsets = (
-        (None, {'fields': ('CompanyBlog', 'title', 'slug', 'content', 'author', 'published_at')}),
+        (None, {'fields': ('CompanyBlog', 'title', 'slug', 'content', 'author', 'published_at', 'image')}),
         ('SEO', {'fields': ('meta_title', 'meta_description', 'meta_keywords')}),
     )
 

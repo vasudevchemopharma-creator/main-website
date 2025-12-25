@@ -650,8 +650,9 @@
                         {% if product.image_url %}
                         <img src="{{ product.get_direct_image_url }}"
                              alt="{{ product.name }}"
-                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="product-icon">{{ product.name|slice:":3"|upper }}</div>
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                             onload="this.nextElementSibling.style.display='none';">
+                        <div class="product-icon" style="display: none;">{{ product.name|slice:":3"|upper }}</div>
                         {% else %}
                         <div class="product-icon" style="display: flex;">{{ product.name|slice:":3"|upper }}</div>
                         {% endif %}

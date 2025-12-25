@@ -1949,8 +1949,18 @@
                         {% endif %}
 
                         <div class="blog-content">
+                            <div class="blog-header">
+                                <div class="blog-date">
+                                    <i class="bi bi-calendar"></i>
+                                    {{ blog.published_at|date:"M j, Y" }}
+                                </div>
+                                <div class="blog-author">
+                                    <i class="bi bi-person"></i>
+                                    {{ blog.author }}
+                                </div>
+                            </div>
                             <h3 class="blog-title">{{ blog.title }}</h3>
-                            <a href="#" class="blog-read-more">
+                            <a href="{% url 'blog_detail' blog.slug %}" class="blog-read-more">
                                 Read More <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
@@ -1972,8 +1982,18 @@
                         {% endif %}
 
                         <div class="blog-content">
+                            <div class="blog-header">
+                                <div class="blog-date">
+                                    <i class="bi bi-calendar"></i>
+                                    {{ blog.published_at|date:"M j, Y" }}
+                                </div>
+                                <div class="blog-author">
+                                    <i class="bi bi-person"></i>
+                                    {{ blog.author }}
+                                </div>
+                            </div>
                             <h3 class="blog-title">{{ blog.title }}</h3>
-                            <a href="#" class="blog-read-more">
+                            <a href="{% url 'blog_detail' blog.slug %}" class="blog-read-more">
                                 Read More <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>

@@ -34,7 +34,7 @@ urlpatterns = [
     path('contact/', views.handle_contact_form, name='contact'),
     path('contact/ajax/', views.contact_ajax, name='contact_ajax'),
     path('product/<slug:slug>/', views.product_detail, name='product_detail'),
-    path('product/<slug:slug>/', views.product_detail, name='product_detail'),
+    path('blog/<slug:slug>/', views.blog_detail, name='blog_detail'),
     # SEO: sitemap and robots
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('robots.txt', views.robots_txt, name='robots_txt'),
